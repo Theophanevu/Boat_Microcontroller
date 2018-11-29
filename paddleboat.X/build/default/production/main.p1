@@ -71,7 +71,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./glcd.h: 50: extern void glcd_Image(unsigned char bitmap[1024]);
 [v _glcd_Image `(v ~T0 @X0 0 ef1`*uc ]
 "45
-[; ;./glcd.h: 45: extern void glcd_SetCursor(unsigned char xpos,unsigned char ypos);
+[; ;./glcd.h: 45: extern void glcd_SetCursor(char xpos, char ypos);
 [v _glcd_SetCursor `(v ~T0 @X0 0 ef2`uc`uc ]
 "47
 [; ;./glcd.h: 47: extern void glcd_WriteChar8X8( unsigned char ch, unsigned char color);
@@ -1722,7 +1722,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 372 ]
 }
 "126
-[; ;main.c: 126:             y++;
+[; ;main.c: 126:             ob.posX++;
 [e :UE 370 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
@@ -1733,7 +1733,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U _main ]
 [f ]
 "129
-[; ;main.c: 129:             y--;
+[; ;main.c: 129:             ob.posX--;
 [e ( _initMyPIC18F ..  ]
 "130
 [; ;main.c: 130:         }
@@ -1751,7 +1751,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "137
 [e = . _ob 3 -> -> 10 `i `uc ]
 "138
-[e = . _ob 0 -> -> 127 `i `uc ]
+[e = . _ob 0 -> -> 123 `i `uc ]
 "139
 [e = . _ob 1 -> -> 3 `i `uc ]
 "140
@@ -1765,7 +1765,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ ! != -> . . _PORTAbits 0 0 `i -> 0 `i 382  ]
 {
 "146
-[e ++ _y -> -> 1 `i `uc ]
+[e ++ . _ob 0 -> -> 1 `i `uc ]
 "147
 }
 [e :U 382 ]
@@ -1773,7 +1773,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ ! != -> . . _PORTAbits 0 1 `i -> 0 `i 383  ]
 {
 "149
-[e -- _y -> -> 1 `i `uc ]
+[e -- . _ob 0 -> -> 1 `i `uc ]
 "150
 }
 [e :U 383 ]
@@ -1782,26 +1782,23 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _glcd_Image (1 -> &U _buffer `*uc ]
 "162
 [; ;main.c: 162:         glcd_SetCursor(ob.posX, ob.posY);
-[e ( _glcd_SetCursor (2 , -> . _ob 0 `uc -> . _ob 1 `uc ]
+[e ( _glcd_SetCursor (2 , . _ob 0 . _ob 1 ]
 "163
 [; ;main.c: 163:         glcd_WriteChar8X8('o', 1);
 [e ( _glcd_WriteChar8X8 (2 , -> -> 111 `ui `uc -> -> 1 `i `uc ]
 "169
-[; ;main.c: 169:         while(1);
-[e :U 385 ]
-[e :U 384 ]
-[e $U 385  ]
-[e :U 386 ]
-"171
-[; ;main.c: 171:     }
+[; ;main.c: 169:         wait(1000);
+[e ( _wait (1 -> 1000 `i ]
+"170
+[; ;main.c: 170:     }
 }
 [e :U 379 ]
 [e $U 380  ]
 [e :U 381 ]
-"172
-[; ;main.c: 172:     return;
+"171
+[; ;main.c: 171:     return;
 [e $UE 378  ]
-"173
-[; ;main.c: 173: }
+"172
+[; ;main.c: 172: }
 [e :UE 378 ]
 }

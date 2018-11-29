@@ -610,7 +610,7 @@ void glcd_SetCursor(unsigned char xpos,unsigned char ypos)
 {
 	unsigned char side = GLCD_LEFT;  			// On initialise sur le coté gauche
 
-	if(xpos > 127 | ypos > 7)					// Si les coordonnées sont Hors limite, on ne traite pas
+	if(xpos < 0 | xpos > 127 | ypos <0 | ypos > 7)					// Si les coordonnées sont Hors limite, on ne traite pas
 		return;
 
 	x = xpos;									// Sauvegarde des données position absolue
@@ -657,22 +657,20 @@ void glcd_WriteChar8X8(unsigned char ch, unsigned char color)
 
     for(i = 0; i < 8; i++)			//on balaye les 8 colonnes du caractère
     {
-        if(xpos < 128){
-            // if((xpos+i) > 63)             	// Si le caractère se trouve entre les deux moitiés, on traite !
-            if(xpos > 63)
-            {
-                xpos -= 64;
-                side = GLCD_RIGHT;
-                GLCD_RS=0; 					// Positionnement du bit pour instruction (adressage)
-                glcd_WriteByte(side, 0x40 | xpos);			//on repositionne le curseur du GLCD
-                glcd_WriteByte(side, 0xB8 | y);					// sur le côté droit
-                GLCD_RS=1; 					// Positionnement du bit pour transfert de données
-            }
-            if(color)
-                glcd_WriteByte(side,Font8x8[chr+i]);	// on écrit le caractère
-            else
-                glcd_WriteByte(side,~(Font8x8[chr+i]));
+        // if((xpos+i) > 63)             	// Si le caractère se trouve entre les deux moitiés, on traite !
+        if(xpos > 63)
+        {
+            xpos -= 64;
+            side = GLCD_RIGHT;
+            GLCD_RS=0; 					// Positionnement du bit pour instruction (adressage)
+            glcd_WriteByte(side, 0x40 | xpos);			//on repositionne le curseur du GLCD
+            glcd_WriteByte(side, 0xB8 | y);					// sur le côté droit
+            GLCD_RS=1; 					// Positionnement du bit pour transfert de données
         }
+        if(color)
+            glcd_WriteByte(side,Font8x8[chr+i]);	// on écrit le caractère
+        else
+            glcd_WriteByte(side,~(Font8x8[chr+i]));
         xpos++;
 	}
 	x+=8;	

@@ -29,7 +29,7 @@
 [v ___lmul __lmul `(ul  1 e 4 0 ]
 "91 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c99\common\Umul64.c
 [v ___omul __omul `(uo  1 e 8 0 ]
-"401 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\paddleboat.X\glcd.c
+"401 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\glcd.c
 [v _glcd_Init glcd_Init `(v  1 e 1 0 ]
 "441
 [v _glcd_WriteByte glcd_WriteByte `(v  1 e 1 0 ]
@@ -45,8 +45,10 @@
 [v _glcd_WriteChar8X8 glcd_WriteChar8X8 `(v  1 e 1 0 ]
 "685
 [v _glcd_WriteChar3x6 glcd_WriteChar3x6 `(v  1 e 1 0 ]
-"95 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\paddleboat.X\main.c
+"95 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\main.c
 [v _initMyPIC18F initMyPIC18F `(v  1 e 1 0 ]
+"119
+[v _wait wait `(v  1 e 1 0 ]
 "128
 [v _main main `(v  1 e 1 0 ]
 [s S45 . 1 `uc 1 RA0 1 0 :1:0 
@@ -87,7 +89,7 @@
 [v _PORTD PORTD `VEuc  1 e 1 @3971 ]
 "2826
 [v _PORTE PORTE `VEuc  1 e 1 @3972 ]
-[s S152 . 1 `uc 1 LATB0 1 0 :1:0 
+[s S153 . 1 `uc 1 LATB0 1 0 :1:0 
 `uc 1 LATB1 1 0 :1:1 
 `uc 1 LATB2 1 0 :1:2 
 `uc 1 LATB3 1 0 :1:3 
@@ -97,7 +99,7 @@
 `uc 1 LATB7 1 0 :1:7 
 ]
 "3100
-[s S161 . 1 `uc 1 LB0 1 0 :1:0 
+[s S162 . 1 `uc 1 LB0 1 0 :1:0 
 `uc 1 LB1 1 0 :1:1 
 `uc 1 LB2 1 0 :1:2 
 `uc 1 LB3 1 0 :1:3 
@@ -106,8 +108,8 @@
 `uc 1 LB6 1 0 :1:6 
 `uc 1 LB7 1 0 :1:7 
 ]
-[u S170 . 1 `S152 1 . 1 0 `S161 1 . 1 0 ]
-[v _LATBbits LATBbits `VES170  1 e 1 @3978 ]
+[u S171 . 1 `S153 1 . 1 0 `S162 1 . 1 0 ]
+[v _LATBbits LATBbits `VES171  1 e 1 @3978 ]
 "3263
 [v _LATD LATD `VEuc  1 e 1 @3980 ]
 "3427
@@ -124,14 +126,14 @@
 [v _ADCON1 ADCON1 `VEuc  1 e 1 @4033 ]
 "6666
 [v _ADCON0 ADCON0 `VEuc  1 e 1 @4034 ]
-"77 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\paddleboat.X\glcd.c
+"77 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\glcd.c
 [v _Font3x6 Font3x6 `C[65][3]uc  1 e 195 0 ]
 "149
 [v _Font8x8 Font8x8 `C[2048]uc  1 e 2048 0 ]
 "395
 [v _x x `uc  1 e 1 0 ]
 [v _y y `uc  1 e 1 0 ]
-"20 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\paddleboat.X\main.c
+"20 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\main.c
 [v _buffer buffer `C[1024]uc  1 e 1024 0 ]
 "128
 [v _main main `(v  1 e 1 0 ]
@@ -143,23 +145,34 @@
 [v main@y y `uc  1 a 1 12 ]
 "131
 [v main@x x `uc  1 a 1 11 ]
-"173
+"172
+} 0
+"119
+[v _wait wait `(v  1 e 1 0 ]
+{
+"120
+[v wait@j j `i  1 a 2 5 ]
+[v wait@i i `i  1 a 2 3 ]
+"119
+[v wait@val val `i  1 p 2 0 ]
+"126
 } 0
 "95
 [v _initMyPIC18F initMyPIC18F `(v  1 e 1 0 ]
 {
 "117
 } 0
-"635 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\paddleboat.X\glcd.c
+"635 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\glcd.c
 [v _glcd_WriteChar8X8 glcd_WriteChar8X8 `(v  1 e 1 0 ]
 {
 [v glcd_WriteChar8X8@ch ch `uc  1 a 1 wreg ]
 "639
 [v glcd_WriteChar8X8@chr chr `ui  1 a 2 5 ]
-"638
-[v glcd_WriteChar8X8@side side `uc  1 a 1 10 ]
 "637
-[v glcd_WriteChar8X8@i i `uc  1 a 1 9 ]
+[v glcd_WriteChar8X8@i i `uc  1 a 1 10 ]
+"638
+[v glcd_WriteChar8X8@side side `uc  1 a 1 9 ]
+"637
 [v glcd_WriteChar8X8@xpos xpos `uc  1 a 1 8 ]
 "635
 [v glcd_WriteChar8X8@ch ch `uc  1 a 1 wreg ]

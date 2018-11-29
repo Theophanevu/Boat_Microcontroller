@@ -5690,7 +5690,7 @@ extern void glcd_Init(unsigned char mode);
 extern void glcd_WriteByte(unsigned char side, unsigned char data);
 extern unsigned char glcd_ReadByte(unsigned char side);
 extern void glcd_PlotPixel(unsigned char x, unsigned char y, unsigned char color);
-extern void glcd_SetCursor(unsigned char xpos,unsigned char ypos);
+extern void glcd_SetCursor(char xpos, char ypos);
 extern void glcd_FillScreen(unsigned char color);
 extern void glcd_WriteChar8X8( unsigned char ch, unsigned char color);
 extern void glcd_WriteChar3x6( unsigned char ch, unsigned char color);
@@ -5824,7 +5824,7 @@ void main(void) {
     t_object ob;
     ob.height=10;
     ob.length=10;
-    ob.posX=127;
+    ob.posX=123;
     ob.posY=3;
     char i, j;
 
@@ -5832,10 +5832,10 @@ void main(void) {
     {
 
         if(PORTAbits.RA0){
-            y++;
+            ob.posX++;
         }
         if(PORTAbits.RA1){
-            y--;
+            ob.posX--;
         }
 # 161 "main.c"
         glcd_Image(buffer);
@@ -5846,8 +5846,7 @@ void main(void) {
 
 
 
-        while(1);
-
+        wait(1000);
     }
     return;
 }

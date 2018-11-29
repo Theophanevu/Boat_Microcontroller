@@ -5630,7 +5630,7 @@ extern void glcd_Init(unsigned char mode);
 extern void glcd_WriteByte(unsigned char side, unsigned char data);
 extern unsigned char glcd_ReadByte(unsigned char side);
 extern void glcd_PlotPixel(unsigned char x, unsigned char y, unsigned char color);
-extern void glcd_SetCursor(unsigned char xpos,unsigned char ypos);
+extern void glcd_SetCursor(char xpos, char ypos);
 extern void glcd_FillScreen(unsigned char color);
 extern void glcd_WriteChar8X8( unsigned char ch, unsigned char color);
 extern void glcd_WriteChar3x6( unsigned char ch, unsigned char color);
@@ -6244,7 +6244,7 @@ void glcd_PlotPixel(unsigned char xpos, unsigned char ypos, unsigned char color)
 
 
 
-void glcd_SetCursor(unsigned char xpos,unsigned char ypos)
+void glcd_SetCursor(char xpos, char ypos)
 {
  unsigned char side = 0;
 
@@ -6284,34 +6284,34 @@ void glcd_WriteChar8X8(unsigned char ch, unsigned char color)
  }
 
  if(x > 63)
-        {
-  side = 1;
-  xpos=x-64;
-  }
- else
-     xpos=x;
-
- chr = (int)ch*8;
-
- for(i = 0; i < 8; i++)
- {
-        if(xpos < 128){
-
- if(xpos > 63)
-  {
-       xpos -= 64;
-       side = 1;
-    LATBbits.LATB2=0;
-    glcd_WriteByte(side, 0x40 | xpos);
-    glcd_WriteByte(side, 0xB8 | y);
-    LATBbits.LATB2=1;
-     }
-    if(color)
-        glcd_WriteByte(side,Font8x8[chr+i]);
-    else
-        glcd_WriteByte(side,~(Font8x8[chr+i]));
+    {
+        side = 1;
+        xpos=x-64;
     }
- xpos++;
+    else
+        xpos=x;
+
+    chr = (int)ch*8;
+
+    for(i = 0; i < 8; i++)
+    {
+
+        if(x+i > 127)
+            return;
+        if(xpos > 63)
+        {
+            xpos -= 64;
+            side = 1;
+            LATBbits.LATB2=0;
+            glcd_WriteByte(side, 0x40 | xpos);
+            glcd_WriteByte(side, 0xB8 | y);
+            LATBbits.LATB2=1;
+        }
+        if(color)
+            glcd_WriteByte(side,Font8x8[chr+i]);
+        else
+            glcd_WriteByte(side,~(Font8x8[chr+i]));
+        xpos++;
  }
  x+=8;
 }

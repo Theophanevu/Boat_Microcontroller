@@ -4354,14 +4354,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :UE 393 ]
 }
 "609
-[; ;glcd.c: 609: void glcd_SetCursor(unsigned char xpos,unsigned char ypos)
+[; ;glcd.c: 609: void glcd_SetCursor(char xpos, char ypos)
 [v _glcd_SetCursor `(v ~T0 @X0 1 ef2`uc`uc ]
 "610
 [; ;glcd.c: 610: {
 {
 [e :U _glcd_SetCursor ]
 "609
-[; ;glcd.c: 609: void glcd_SetCursor(unsigned char xpos,unsigned char ypos)
+[; ;glcd.c: 609: void glcd_SetCursor(char xpos, char ypos)
 [v _xpos `uc ~T0 @X0 1 r1 ]
 [v _ypos `uc ~T0 @X0 1 r2 ]
 "610
@@ -4380,10 +4380,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 398 ]
 "616
 [; ;glcd.c: 616:  x = xpos;
-[e = _x _xpos ]
+[e = _x -> _xpos `uc ]
 "617
 [; ;glcd.c: 617:  y = ypos;
-[e = _y _ypos ]
+[e = _y -> _ypos `uc ]
 "619
 [; ;glcd.c: 619:     if(xpos > 63)
 [e $ ! > -> _xpos `i -> 63 `i 399  ]
@@ -4464,90 +4464,89 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;glcd.c: 648:  if(x > 63)
 [e $ ! > -> _x `i -> 63 `i 402  ]
 "649
-[; ;glcd.c: 649:         {
+[; ;glcd.c: 649:     {
 {
 "650
-[; ;glcd.c: 650:   side = 1;
+[; ;glcd.c: 650:         side = 1;
 [e = _side -> -> 1 `i `uc ]
 "651
-[; ;glcd.c: 651:   xpos=x-64;
+[; ;glcd.c: 651:         xpos=x-64;
 [e = _xpos -> - -> _x `i -> 64 `i `uc ]
 "652
-[; ;glcd.c: 652:   }
+[; ;glcd.c: 652:     }
 }
 [e $U 403  ]
 "653
-[; ;glcd.c: 653:  else
+[; ;glcd.c: 653:     else
 [e :U 402 ]
 "654
-[; ;glcd.c: 654:      xpos=x;
+[; ;glcd.c: 654:         xpos=x;
 [e = _xpos _x ]
 [e :U 403 ]
 "656
-[; ;glcd.c: 656:  chr = (int)ch*8;
+[; ;glcd.c: 656:     chr = (int)ch*8;
 [e = _chr -> * -> _ch `i -> 8 `i `ui ]
 "658
-[; ;glcd.c: 658:  for(i = 0; i < 8; i++)
+[; ;glcd.c: 658:     for(i = 0; i < 8; i++)
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> 8 `i 404  ]
 [e $U 405  ]
 [e :U 404 ]
 "659
-[; ;glcd.c: 659:  {
+[; ;glcd.c: 659:     {
 {
-"660
-[; ;glcd.c: 660:         if(xpos < 128){
-[e $ ! < -> _xpos `i -> 128 `i 407  ]
-{
+"661
+[; ;glcd.c: 661:         if(x+i > 127)
+[e $ ! > + -> _x `i -> _i `i -> 127 `i 407  ]
 "662
-[; ;glcd.c: 662:  if(xpos > 63)
-[e $ ! > -> _xpos `i -> 63 `i 408  ]
+[; ;glcd.c: 662:             return;
+[e $UE 400  ]
+[e :U 407 ]
 "663
-[; ;glcd.c: 663:   {
-{
+[; ;glcd.c: 663:         if(xpos > 63)
+[e $ ! > -> _xpos `i -> 63 `i 408  ]
 "664
-[; ;glcd.c: 664:        xpos -= 64;
-[e =- _xpos -> -> 64 `i `uc ]
+[; ;glcd.c: 664:         {
+{
 "665
-[; ;glcd.c: 665:        side = 1;
-[e = _side -> -> 1 `i `uc ]
+[; ;glcd.c: 665:             xpos -= 64;
+[e =- _xpos -> -> 64 `i `uc ]
 "666
-[; ;glcd.c: 666:     LATBbits.LATB2=0;
-[e = . . _LATBbits 0 2 -> -> 0 `i `uc ]
+[; ;glcd.c: 666:             side = 1;
+[e = _side -> -> 1 `i `uc ]
 "667
-[; ;glcd.c: 667:     glcd_WriteByte(side, 0x40 | xpos);
-[e ( _glcd_WriteByte (2 , _side -> | -> 64 `i -> _xpos `i `uc ]
+[; ;glcd.c: 667:             LATBbits.LATB2=0;
+[e = . . _LATBbits 0 2 -> -> 0 `i `uc ]
 "668
-[; ;glcd.c: 668:     glcd_WriteByte(side, 0xB8 | y);
-[e ( _glcd_WriteByte (2 , _side -> | -> 184 `i -> _y `i `uc ]
+[; ;glcd.c: 668:             glcd_WriteByte(side, 0x40 | xpos);
+[e ( _glcd_WriteByte (2 , _side -> | -> 64 `i -> _xpos `i `uc ]
 "669
-[; ;glcd.c: 669:     LATBbits.LATB2=1;
-[e = . . _LATBbits 0 2 -> -> 1 `i `uc ]
+[; ;glcd.c: 669:             glcd_WriteByte(side, 0xB8 | y);
+[e ( _glcd_WriteByte (2 , _side -> | -> 184 `i -> _y `i `uc ]
 "670
-[; ;glcd.c: 670:      }
+[; ;glcd.c: 670:             LATBbits.LATB2=1;
+[e = . . _LATBbits 0 2 -> -> 1 `i `uc ]
+"671
+[; ;glcd.c: 671:         }
 }
 [e :U 408 ]
-"671
-[; ;glcd.c: 671:     if(color)
-[e $ ! != -> _color `i -> 0 `i 409  ]
 "672
-[; ;glcd.c: 672:         glcd_WriteByte(side,Font8x8[chr+i]);
+[; ;glcd.c: 672:         if(color)
+[e $ ! != -> _color `i -> 0 `i 409  ]
+"673
+[; ;glcd.c: 673:             glcd_WriteByte(side,Font8x8[chr+i]);
 [e ( _glcd_WriteByte (2 , _side *U + &U _Font8x8 * -> + _chr -> _i `ui `ux -> -> # *U &U _Font8x8 `ui `ux ]
 [e $U 410  ]
-"673
-[; ;glcd.c: 673:     else
-[e :U 409 ]
 "674
-[; ;glcd.c: 674:         glcd_WriteByte(side,~(Font8x8[chr+i]));
+[; ;glcd.c: 674:         else
+[e :U 409 ]
+"675
+[; ;glcd.c: 675:             glcd_WriteByte(side,~(Font8x8[chr+i]));
 [e ( _glcd_WriteByte (2 , _side -> ~ -> *U + &U _Font8x8 * -> + _chr -> _i `ui `ux -> -> # *U &U _Font8x8 `ui `ux `i `uc ]
 [e :U 410 ]
-"675
-[; ;glcd.c: 675:     }
-}
-[e :U 407 ]
 "676
-[; ;glcd.c: 676:  xpos++;
+[; ;glcd.c: 676:         xpos++;
 [e ++ _xpos -> -> 1 `i `uc ]
 "677
 [; ;glcd.c: 677:  }
