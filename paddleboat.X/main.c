@@ -84,12 +84,10 @@ const unsigned char buffer[] = {
 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
 };
 
-typedef struct object{
+typedef struct rock{
     char posX;
     char posY;
-    char height; 
-    char length; 
-}t_object;
+}t_rock;
 
 // --- init the PIC18F device
 void initMyPIC18F(void)
@@ -125,22 +123,20 @@ void wait(int val){
     }
 }
 
-void main(void) {
-    initMyPIC18F();
-    glcd_Init(GLCD_ON);
-    char x=32;
-    char y=32;
-    /*unsigned char str[50]={'T', 'h', 'e', 'o', ' ', ':', ' ', '\0'};
-    unsigned char c='A';*/
-    t_object ob;
-    ob.height=10;
-    ob.length=10;
-    ob.posX=123;
-    ob.posY=3;
-    char i, j;
-    
-    while(1)
+t_rock initRock(){
+    t_rock rock; 
+    t_rock posX=127;
+    t_rock posY=3;
+    return rock;
+}
+
+void play(){
+    t_rock rocks[3];
+    unsigned char game_over=1;
+    while(!game_over)
     { 
+        menu();
+        
         //UPDATE DATA
         if(PORTAbits.RA0){
             ob.posX++;
@@ -166,8 +162,41 @@ void main(void) {
         glcd_WriteString(str, f3X6, 1);
         glcd_WriteChar8X8(&c, 1);*/
         
-        wait(1000);
+        wait(5000);
     }
+}
+
+void menu(){
+    unsigned char s=0;
+    while(!PORTAbits.RA0){
+        if(PORTAbits.RA1){ //Left button
+            if(s<2)s++;
+        }
+        if(PORTAbits.RA2){ //Right button
+            if(s>0)s--;
+        }
+    }
+    switch(s){
+        case 0: 
+            play();
+            break;
+        case 1: 
+            scores();
+            break;
+        case 2:
+            help();
+            break;
+        default:
+            play();
+    }
+        
+    }
+}
+
+void main(void) {
+    initMyPIC18F();
+    glcd_Init(GLCD_ON);
+    
     return;
 }
 
