@@ -44,10 +44,13 @@ extern unsigned char glcd_ReadByte(unsigned char side);
 extern void glcd_PlotPixel(unsigned char x, unsigned char y, unsigned char color);
 extern void glcd_SetCursor(unsigned char xpos,unsigned char ypos);
 extern void glcd_FillScreen(unsigned char color);
+extern void glcd_FillRiver();
 extern void glcd_WriteChar8X8( unsigned char ch, unsigned char color);
+extern void glcd_WriteRock(signed char posX, unsigned char posY);
 extern void glcd_WriteChar3x6( unsigned char ch, unsigned char color);
 extern void glcd_WriteString(unsigned char str[],unsigned char font,unsigned char color);
 extern void glcd_Image(unsigned char bitmap[1024]);
+void glcd_Boat8x8(signed char angle);
 
 
 #endif	/* GLCD_H */

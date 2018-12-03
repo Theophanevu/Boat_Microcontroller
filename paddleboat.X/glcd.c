@@ -394,6 +394,33 @@ const unsigned char Font8x8[2048] =
 //*************************************************************************
 unsigned char x,y;		// x et y serviront à la sauvegarde des coordonnées absolues de l'écran
 
+const unsigned char Boat_matrix[40] = {
+    96,   112,   120,   60,   60,   30,  14,   3, 	//		-2
+	24,   24,   60,   60,   30,   30,   28,   12, 	//		-1
+    24,   24,   60,   60,   60,   60,   24,   24, 	//		0
+	12,   28,   30,   30,   60,   60,   24,   14, 	//		1
+    6,   14,   30,   60,   60,   120,   112,   96, 	//		2
+   
+};
+
+void glcd_Boat8x8(signed char angle) 
+{
+	unsigned char i;
+	unsigned char side = GLCD_LEFT; 
+	unsigned int chr;
+    
+	unsigned char xpos=32;
+    
+    chr = 16 + (int)angle*8;				//Positionnement de chr au début du caractère (8 bytes par caractère)
+
+    for(i = 0; i < 8; i++)			//on balaye les 8 colonnes du caractère
+    {
+        glcd_WriteByte(side,Boat_matrix[chr+i]);	// on écrit le caractère
+        xpos++;
+	}
+    x+=8;
+}
+
 
 //************************************************************************
 // void InitDisplay(void)
@@ -468,6 +495,28 @@ void glcd_WriteByte(unsigned char side, unsigned char data)
 	GLCD_CS2 = 0;				// relachement des ChipSelect
 }
 
+void glcd_FillRiver()
+{
+    unsigned char color=0;
+unsigned char i, j;
+								
+	for(i = 2; i < 6; i ++)							// Boucle sur les pages verticales
+	{
+		GLCD_RS=0; 									// Positionnement du bit pour instruction (adressage)
+      	glcd_WriteByte(GLCD_LEFT, 0b01000000);      // Envoi la position horizontale à 0
+      	glcd_WriteByte(GLCD_RIGHT, 0b01000000);
+      	glcd_WriteByte(GLCD_LEFT, i | 0b10111000);  // Envoi la position verticale (page 0)
+      	glcd_WriteByte(GLCD_RIGHT, i | 0b10111000);
+      	GLCD_RS=1;                                  // Positionnement du bit pour transfert de données
+		
+			for(j = 0; j < 64; j++)					// Boucle sur les colonnes
+			{
+			 glcd_WriteByte(GLCD_LEFT, 0xFF*color);  // Allume ou éteint les pixels
+         	 glcd_WriteByte(GLCD_RIGHT, 0xFF*color); 
+			}
+		
+	}
+}
 
 //************************************************************************
 // void WriteChar(unsigned char ch)
@@ -610,7 +659,7 @@ void glcd_SetCursor(unsigned char xpos,unsigned char ypos)
 {
 	unsigned char side = GLCD_LEFT;  			// On initialise sur le coté gauche
 
-	if(xpos < 0 | xpos > 127 | ypos <0 | ypos > 7)					// Si les coordonnées sont Hors limite, on ne traite pas
+	if(xpos > 127 | ypos > 7)					// Si les coordonnées sont Hors limite, on ne traite pas
 		return;
 
 	x = xpos;									// Sauvegarde des données position absolue
@@ -674,6 +723,57 @@ void glcd_WriteChar8X8(unsigned char ch, unsigned char color)
         xpos++;
 	}
 	x+=8;	
+}
+
+
+void glcd_WriteRock(signed char posX, unsigned char posY)
+{
+	unsigned char ch='O';
+    unsigned char color=1;
+    
+    unsigned char i, xpos;
+	unsigned char side = GLCD_LEFT;  	// On initialise sur le coté gauche	
+	unsigned int chr;
+    unsigned char d=0, d2=0;
+	
+    if(posX>=0){
+        glcd_SetCursor(posX, posY);
+        if(posX>119)d2=posX-119;
+    }
+    else {
+        glcd_SetCursor(0, posY);
+        d=-posX;
+    }
+    
+	if(x > 63)           			// Si ce n'est pas le côté gauche, c'est le droit
+   	{
+        side = GLCD_RIGHT;
+        xpos=x-64;					// x désigne la position absolue, 
+    }							//xpos est la position / au controleur doit ou gauche
+    else		
+        xpos=x;						//Lorsque l'on est à gauche x=xpos
+
+    chr = (int)ch*8;				//Positionnement de chr au début du caractère (8 bytes par caractère)
+
+    for(i = d; i < 8-d2; i++)			//on balaye les 8 colonnes du caractère
+    {
+        // if((xpos+i) > 63)             	// Si le caractère se trouve entre les deux moitiés, on traite !
+        if(xpos > 63)
+        {
+            xpos -= 64;
+            side = GLCD_RIGHT;
+            GLCD_RS=0; 					// Positionnement du bit pour instruction (adressage)
+            glcd_WriteByte(side, 0x40 | xpos);			//on repositionne le curseur du GLCD
+            glcd_WriteByte(side, 0xB8 | y);					// sur le côté droit
+            GLCD_RS=1; 					// Positionnement du bit pour transfert de données
+        }
+        if(color)
+            glcd_WriteByte(side,Font8x8[chr+i]);	// on écrit le caractère
+        else
+            glcd_WriteByte(side,~(Font8x8[chr+i]));
+        xpos++;
+	}
+	x+=8-d-d2;	
 }
 
 

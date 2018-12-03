@@ -5630,12 +5630,15 @@ extern void glcd_Init(unsigned char mode);
 extern void glcd_WriteByte(unsigned char side, unsigned char data);
 extern unsigned char glcd_ReadByte(unsigned char side);
 extern void glcd_PlotPixel(unsigned char x, unsigned char y, unsigned char color);
-extern void glcd_SetCursor(char xpos, char ypos);
+extern void glcd_SetCursor(unsigned char xpos,unsigned char ypos);
 extern void glcd_FillScreen(unsigned char color);
+extern void glcd_FillRiver();
 extern void glcd_WriteChar8X8( unsigned char ch, unsigned char color);
+extern void glcd_WriteRock(signed char posX, unsigned char posY);
 extern void glcd_WriteChar3x6( unsigned char ch, unsigned char color);
 extern void glcd_WriteString(unsigned char str[],unsigned char font,unsigned char color);
 extern void glcd_Image(unsigned char bitmap[1024]);
+void glcd_Boat8x8(signed char angle);
 # 2 "glcd.c" 2
 
 
@@ -6032,6 +6035,33 @@ const unsigned char Font8x8[2048] =
 
 unsigned char x,y;
 
+const unsigned char Boat_matrix[40] = {
+    96, 112, 120, 60, 60, 30, 14, 3,
+ 24, 24, 60, 60, 30, 30, 28, 12,
+    24, 24, 60, 60, 60, 60, 24, 24,
+ 12, 28, 30, 30, 60, 60, 24, 14,
+    6, 14, 30, 60, 60, 120, 112, 96,
+
+};
+
+void glcd_Boat8x8(signed char angle)
+{
+ unsigned char i;
+ unsigned char side = 0;
+ unsigned int chr;
+
+ unsigned char xpos=32;
+
+    chr = 16 + (int)angle*8;
+
+    for(i = 0; i < 8; i++)
+    {
+        glcd_WriteByte(side,Boat_matrix[chr+i]);
+        xpos++;
+ }
+    x+=8;
+}
+
 
 
 
@@ -6106,6 +6136,28 @@ void glcd_WriteByte(unsigned char side, unsigned char data)
  LATBbits.LATB1 = 0;
 }
 
+void glcd_FillRiver()
+{
+    unsigned char color=0;
+unsigned char i, j;
+
+ for(i = 2; i < 6; i ++)
+ {
+  LATBbits.LATB2=0;
+       glcd_WriteByte(0, 0b01000000);
+       glcd_WriteByte(1, 0b01000000);
+       glcd_WriteByte(0, i | 0b10111000);
+       glcd_WriteByte(1, i | 0b10111000);
+       LATBbits.LATB2=1;
+
+   for(j = 0; j < 64; j++)
+   {
+    glcd_WriteByte(0, 0xFF*color);
+           glcd_WriteByte(1, 0xFF*color);
+   }
+
+ }
+}
 
 
 
@@ -6244,7 +6296,7 @@ void glcd_PlotPixel(unsigned char xpos, unsigned char ypos, unsigned char color)
 
 
 
-void glcd_SetCursor(char xpos, char ypos)
+void glcd_SetCursor(unsigned char xpos,unsigned char ypos)
 {
  unsigned char side = 0;
 
@@ -6296,8 +6348,6 @@ void glcd_WriteChar8X8(unsigned char ch, unsigned char color)
     for(i = 0; i < 8; i++)
     {
 
-        if(x+i > 127)
-            return;
         if(xpos > 63)
         {
             xpos -= 64;
@@ -6314,6 +6364,57 @@ void glcd_WriteChar8X8(unsigned char ch, unsigned char color)
         xpos++;
  }
  x+=8;
+}
+
+
+void glcd_WriteRock(signed char posX, unsigned char posY)
+{
+ unsigned char ch='O';
+    unsigned char color=1;
+
+    unsigned char i, xpos;
+ unsigned char side = 0;
+ unsigned int chr;
+    unsigned char d=0, d2=0;
+
+    if(posX>=0){
+        glcd_SetCursor(posX, posY);
+        if(posX>119)d2=posX-119;
+    }
+    else {
+        glcd_SetCursor(0, posY);
+        d=-posX;
+    }
+
+ if(x > 63)
+    {
+        side = 1;
+        xpos=x-64;
+    }
+    else
+        xpos=x;
+
+    chr = (int)ch*8;
+
+    for(i = d; i < 8-d2; i++)
+    {
+
+        if(xpos > 63)
+        {
+            xpos -= 64;
+            side = 1;
+            LATBbits.LATB2=0;
+            glcd_WriteByte(side, 0x40 | xpos);
+            glcd_WriteByte(side, 0xB8 | y);
+            LATBbits.LATB2=1;
+        }
+        if(color)
+            glcd_WriteByte(side,Font8x8[chr+i]);
+        else
+            glcd_WriteByte(side,~(Font8x8[chr+i]));
+        xpos++;
+ }
+ x+=8-d-d2;
 }
 
 
