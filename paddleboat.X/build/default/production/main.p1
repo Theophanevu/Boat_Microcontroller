@@ -32,15 +32,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 "2826
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f4550.h: 2826: extern volatile unsigned char PORTE __attribute__((address(0xF84)));
 [v _PORTE `Vuc ~T0 @X0 0 e@3972 ]
-"92 main.c
-[; ;main.c: 92:  TRISC = 0x00;
+"97 main.c
+[; ;main.c: 97:     TRISA = 0xFF;
 [s S370 `c 1 `uc 1 ]
 [n S370 rock posX posY ]
 "41 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\c99\stdlib.h
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\c99\stdlib.h: 41: int rand (void);
 [v _rand `(i ~T0 @X0 0 ef ]
-"97 main.c
-[; ;main.c: 97:     TRISA = 0xFF;
+"102 main.c
+[; ;main.c: 102:  PORTD = 0x00;
 [s S371 `uc 1 `c 1 ]
 [n S371 boat posY angle ]
 "52 ./glcd.h
@@ -87,9 +87,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 "49 ./glcd.h
 [; ;./glcd.h: 49: extern void glcd_WriteRock(signed char posX, unsigned char posY);
 [v _glcd_WriteRock `(v ~T0 @X0 0 ef2`c`uc ]
-"44
-[; ;./glcd.h: 44: extern void glcd_PlotPixel(unsigned char x, unsigned char y, unsigned char color);
-[v _glcd_PlotPixel `(v ~T0 @X0 0 ef3`uc`uc`uc ]
+"53
+[; ;./glcd.h: 53: void glcd_WriteBoat(signed char angle, unsigned char posY);
+[v _glcd_WriteBoat `(v ~T0 @X0 0 ef2`c`uc ]
+"46
+[; ;./glcd.h: 46: extern void glcd_FillScreen(unsigned char color);
+[v _glcd_FillScreen `(v ~T0 @X0 0 ef1`uc ]
+"48
+[; ;./glcd.h: 48: extern void glcd_WriteChar8X8( unsigned char ch, unsigned char color);
+[v _glcd_WriteChar8X8 `(v ~T0 @X0 0 ef2`uc`uc ]
 [p mainexit ]
 "41
 [; ;./glcd.h: 41: extern void glcd_Init(unsigned char mode);
@@ -1653,24 +1659,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> -> 207 `i `uc
 ..
 ]
-"103
-[; ;main.c: 103: 
-[v _up_key `uc ~T0 @X0 1 e ]
-[i _up_key
--> -> 0 `i `uc
-]
-"104
-[; ;main.c: 104:  PORTE = 0x00;
-[v _down_key `uc ~T0 @X0 1 e ]
-[i _down_key
--> -> 0 `i `uc
-]
-"106
-[; ;main.c: 106: }
-[v _nb `ui ~T0 @X0 1 e ]
-[i _nb
--> -> 0 `i `ui
-]
+"93
+[; ;main.c: 93:  TRISD = 0x00;
+[v _sc1 `ui ~T0 @X0 1 e ]
+"94
+[; ;main.c: 94:  TRISE = 0x00;
+[v _sc2 `ui ~T0 @X0 1 e ]
+"95
+[; ;main.c: 95: 
+[v _sc3 `ui ~T0 @X0 1 e ]
 "109
 [; ;main.c: 109:     int i, j;
 [v _initMyPIC18F `(v ~T0 @X0 1 ef ]
@@ -1710,14 +1707,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 127:     unsigned int score;
 [e = _PORTD -> -> 0 `i `uc ]
 "129
-[; ;main.c: 129:     t_rock rocks[2];
+[; ;main.c: 129:     t_rock rocks[3];
 [e = _PORTE -> -> 0 `i `uc ]
 "131
 [; ;main.c: 131: 
 [e :UE 372 ]
 }
 "133
-[; ;main.c: 133:     boat.posY=31;
+[; ;main.c: 133:     boat.posY=28;
 [v _wait `(v ~T0 @X0 1 ef1`i ]
 {
 [e :U _wait ]
@@ -1750,7 +1747,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 379 ]
 }
 "139
-[; ;main.c: 139:         rocks[i].posX=127-(2 -1-i)*(128/2);
+[; ;main.c: 139:         rocks[i].posX=127-(3 -1-i)*(128/3);
 }
 [e ++ _i -> 1 `i ]
 [e :U 377 ]
@@ -1768,24 +1765,24 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U _initRock ]
 [f ]
 "143
-[; ;main.c: 143:     game_over=0;
+[; ;main.c: 143: 
 [v _rock `S370 ~T0 @X0 1 a ]
 "144
-[; ;main.c: 144:     score=0;
+[; ;main.c: 144:     game_over=0;
 [e = . _rock 0 -> -> 127 `i `c ]
 "145
-[; ;main.c: 145: 
+[; ;main.c: 145:     score=0;
 [e = . _rock 1 -> + -> 2 `i % ( _rand ..  -> 4 `i `uc ]
 "146
 [; ;main.c: 146: 
 [e ) _rock ]
 [e $UE 381  ]
 "147
-[; ;main.c: 147:     glcd_Image(fond);
+[; ;main.c: 147: 
 [e :UE 381 ]
 }
 "149
-[; ;main.c: 149:     glcd_WriteString("SCORE", 1, 1);
+[; ;main.c: 149:     glcd_SetCursor(24,7);
 [v _play `(v ~T0 @X0 1 ef ]
 {
 [e :U _play ]
@@ -1795,346 +1792,591 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _game_over `uc ~T0 @X0 1 a ]
 [v _i `uc ~T0 @X0 1 a ]
 "152
-[; ;main.c: 152:     while(!game_over)
+[; ;main.c: 152: 
 [v _score `ui ~T0 @X0 1 a ]
 "153
-[; ;main.c: 153:     {
+[; ;main.c: 153:     while(!game_over)
 [v _boat `S371 ~T0 @X0 1 a ]
 "154
-[; ;main.c: 154: 
-[v _rocks `S370 ~T0 @X0 -> 2 `i a ]
+[; ;main.c: 154:     {
+[v _rocks `S370 ~T0 @X0 -> 3 `i a ]
 "155
-[; ;main.c: 155:         if(PORTAbits.RA0){
+[; ;main.c: 155: 
 [v _scorestr `uc ~T0 @X0 -> 20 `i a ]
 "158
 [; ;main.c: 158:         }
-[e = . _boat 0 -> -> 31 `i `uc ]
+[e = . _boat 0 -> -> 28 `i `uc ]
 "159
 [; ;main.c: 159:         if(PORTAbits.RA1){
 [e = . _boat 1 -> -> 0 `i `c ]
 "162
-[; ;main.c: 162:         }
+[; ;main.c: 162: 
 {
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 2 `i 383  ]
+[e $ < -> _i `i -> 3 `i 383  ]
 [e $U 384  ]
 [e :U 383 ]
 {
 "163
-[; ;main.c: 163: 
+[; ;main.c: 163:         if(boat.angle>2){
 [e = *U + &U _rocks * -> _i `ux -> -> # *U &U _rocks `ui `ux ( _initRock ..  ]
 "164
-[; ;main.c: 164:         if(boat.angle>2){
-[e = . *U + &U _rocks * -> _i `ux -> -> # *U &U _rocks `ui `ux 0 -> - -> 127 `i * - - -> 2 `i -> 1 `i -> _i `i / -> 128 `i -> 2 `i `c ]
+[; ;main.c: 164:             boat.angle=2;
+[e = . *U + &U _rocks * -> _i `ux -> -> # *U &U _rocks `ui `ux 0 -> - -> 127 `i * - - -> 3 `i -> 1 `i -> _i `i / -> 128 `i -> 3 `i `c ]
 "165
-[; ;main.c: 165:             boat.angle=2;
+[; ;main.c: 165:         }
 }
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 2 `i 383  ]
+[e $ < -> _i `i -> 3 `i 383  ]
 [e :U 384 ]
 }
-"168
-[; ;main.c: 168:             boat.angle=-2;
-[e = _game_over -> -> 0 `i `uc ]
 "169
-[; ;main.c: 169:         }
+[; ;main.c: 169: 
+[e = _game_over -> -> 0 `i `uc ]
+"170
+[; ;main.c: 170: 
 [e = _score -> -> 0 `i `ui ]
-"172
-[; ;main.c: 172: 
-[e ( _glcd_Image (1 -> &U _fond `*uc ]
 "173
-[; ;main.c: 173:         boat.posY-=boat.angle;
-[e ( _glcd_SetCursor (2 , -> -> 24 `i `uc -> -> 7 `i `uc ]
+[; ;main.c: 173: 
+[e ( _glcd_Image (1 -> &U _fond `*uc ]
 "174
-[; ;main.c: 174: 
+[; ;main.c: 174:         if(boat.posY < 16){
+[e ( _glcd_SetCursor (2 , -> -> 24 `i `uc -> -> 7 `i `uc ]
+"175
+[; ;main.c: 175:             boat.posY=16;
 [e ( _glcd_WriteString (3 , , :s 1C -> -> 1 `i `uc -> -> 1 `i `uc ]
-"177
-[; ;main.c: 177:         }
+"178
+[; ;main.c: 178:             boat.posY=48-8;
 [e $U 386  ]
 [e :U 387 ]
-"178
-[; ;main.c: 178:         else if(boat.posY > 47){
-{
-"180
-[; ;main.c: 180:         }
-[e $ ! != -> . . _PORTAbits 0 0 `i -> 0 `i 389  ]
+"179
+[; ;main.c: 179:         }
 {
 "181
 [; ;main.c: 181: 
+[e $ ! != -> . . _PORTAbits 0 2 `i -> 0 `i 389  ]
+{
+"182
+[; ;main.c: 182:         for(i=0;i<3;i++){
 [e ++ . _boat 1 -> -> 1 `i `c ]
 "183
-[; ;main.c: 183:         for(i=0;i<2;i++){
+[; ;main.c: 183:             if(rocks[i].posX>-6)rocks[i].posX-=2;
 }
 [e :U 389 ]
 "184
-[; ;main.c: 184:             if(rocks[i].posX>-6)rocks[i].posX-=2;
+[; ;main.c: 184:             else(rocks[i]=initRock());
 [e $ ! != -> . . _PORTAbits 0 1 `i -> 0 `i 390  ]
 {
 "185
-[; ;main.c: 185:             else(rocks[i]=initRock());
+[; ;main.c: 185:         }
 [e -- . _boat 1 -> -> 1 `i `c ]
-"187
-[; ;main.c: 187: 
+"186
+[; ;main.c: 186: 
 }
 [e :U 390 ]
-"189
-[; ;main.c: 189:         for(i=0;i<2;i++){
+"188
+[; ;main.c: 188:         for(i=0;i<3;i++){
 [e $ ! > -> . _boat 1 `i -> 2 `i 391  ]
 {
-"190
-[; ;main.c: 190:             if(((rocks[i].posX-16)<8)&&(rocks[i].posX-16>-8)&&((boat.posY/8)==rocks[i].posY)){
+"189
+[; ;main.c: 189:             if(((rocks[i].posX-16)<8)&&(rocks[i].posX-16>-8)&&((rocks[i].posY*8-boat.posY)<8)&&((rocks[i].posY*8-boat.posY)>-8)){
 [e = . _boat 1 -> -> 2 `i `c ]
-"191
-[; ;main.c: 191:                 game_over=1;
+"190
+[; ;main.c: 190:                 game_over=1;
 }
 [e :U 391 ]
-"192
-[; ;main.c: 192:             }
+"191
+[; ;main.c: 191:             }
 [e $ ! < -> . _boat 1 `i -U -> 2 `i 392  ]
 {
-"193
-[; ;main.c: 193:         }
+"192
+[; ;main.c: 192:         }
 [e = . _boat 1 -> -U -> 2 `i `c ]
-"194
-[; ;main.c: 194: 
+"193
+[; ;main.c: 193: 
 }
 [e :U 392 ]
-"198
-[; ;main.c: 198:         sprintf(scorestr, "=%d", score);
+"197
+[; ;main.c: 197:         sprintf(scorestr, "=%d", score);
 [e =- . _boat 0 -> . _boat 1 `uc ]
-"200
-[; ;main.c: 200:         glcd_WriteString(scorestr, 1, 1);
+"199
+[; ;main.c: 199:         glcd_WriteString(scorestr, 1, 1);
 [e $ ! < -> . _boat 0 `i -> 16 `i 393  ]
 {
-"201
-[; ;main.c: 201: 
+"200
+[; ;main.c: 200: 
 [e = . _boat 0 -> -> 16 `i `uc ]
-"202
-[; ;main.c: 202:         for(i=0; i<2; i++){
+"201
+[; ;main.c: 201:         for(i=0; i<3; i++){
 }
 [e $U 394  ]
-"203
-[; ;main.c: 203:             glcd_WriteRock(rocks[i].posX, rocks[i].posY);
+"202
+[; ;main.c: 202:             glcd_WriteRock(rocks[i].posX, rocks[i].posY);
 [e :U 393 ]
-[e $ ! > -> . _boat 0 `i -> 47 `i 395  ]
+[e $ ! > -> . _boat 0 `i - -> 48 `i -> 8 `i 395  ]
 {
+"203
+[; ;main.c: 203:         }
+[e = . _boat 0 -> - -> 48 `i -> 8 `i `uc ]
 "204
-[; ;main.c: 204:         }
-[e = . _boat 0 -> -> 47 `i `uc ]
-"205
-[; ;main.c: 205: 
+[; ;main.c: 204: 
 }
 [e :U 395 ]
 [e :U 394 ]
-"208
-[; ;main.c: 208:         nb=score%13+score;
+"207
+[; ;main.c: 207: 
 {
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 2 `i 396  ]
+[e $ < -> _i `i -> 3 `i 396  ]
 [e $U 397  ]
 [e :U 396 ]
 {
-"209
-[; ;main.c: 209:         score++;
+"208
+[; ;main.c: 208:         if(score==0)wait(5000);
 [e $ ! > -> . *U + &U _rocks * -> _i `ux -> -> # *U &U _rocks `ui `ux 0 `i -U -> 6 `i 399  ]
 [e =- . *U + &U _rocks * -> _i `ux -> -> # *U &U _rocks `ui `ux 0 -> -> 2 `i `c ]
 [e $U 400  ]
-"210
-[; ;main.c: 210: 
+"209
+[; ;main.c: 209:         score++;
 [e :U 399 ]
 [e = *U + &U _rocks * -> _i `ux -> -> # *U &U _rocks `ui `ux ( _initRock ..  ]
 [e :U 400 ]
-"211
-[; ;main.c: 211:         wait(500);
+"210
+[; ;main.c: 210: 
 }
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 2 `i 396  ]
+[e $ < -> _i `i -> 3 `i 396  ]
 [e :U 397 ]
 }
-"214
-[; ;main.c: 214:     while(1);
+"213
+[; ;main.c: 213:     }
 {
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 2 `i 401  ]
+[e $ < -> _i `i -> 3 `i 401  ]
 [e $U 402  ]
 [e :U 401 ]
 {
+"214
+[; ;main.c: 214: 
+[e $ ! && && && < - -> . *U + &U _rocks * -> _i `ux -> -> # *U &U _rocks `ui `ux 0 `i -> 16 `i -> 8 `i > - -> . *U + &U _rocks * -> _i `ux -> -> # *U &U _rocks `ui `ux 0 `i -> 16 `i -U -> 8 `i < - * -> . *U + &U _rocks * -> _i `ux -> -> # *U &U _rocks `ui `ux 1 `i -> 8 `i -> . _boat 0 `i -> 8 `i > - * -> . *U + &U _rocks * -> _i `ux -> -> # *U &U _rocks `ui `ux 1 `i -> 8 `i -> . _boat 0 `i -U -> 8 `i 404  ]
+{
 "215
 [; ;main.c: 215: 
-[e $ ! && && < - -> . *U + &U _rocks * -> _i `ux -> -> # *U &U _rocks `ui `ux 0 `i -> 16 `i -> 8 `i > - -> . *U + &U _rocks * -> _i `ux -> -> # *U &U _rocks `ui `ux 0 `i -> 16 `i -U -> 8 `i == / -> . _boat 0 `i -> 8 `i -> . *U + &U _rocks * -> _i `ux -> -> # *U &U _rocks `ui `ux 1 `i 404  ]
-{
-"216
-[; ;main.c: 216: }
 [e = _game_over -> -> 1 `i `uc ]
-"217
-[; ;main.c: 217: 
+"216
+[; ;main.c: 216:     if(score>sc1){
 }
 [e :U 404 ]
-"218
-[; ;main.c: 218: void scores();
+"217
+[; ;main.c: 217:         sc1=score;
 }
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 2 `i 401  ]
+[e $ < -> _i `i -> 3 `i 401  ]
 [e :U 402 ]
 }
-"221
-[; ;main.c: 221: 
+"220
+[; ;main.c: 220:         sc2=score;
 [e ( _glcd_FillRiver ..  ]
-"223
-[; ;main.c: 223:     unsigned char s=0;
+"222
+[; ;main.c: 222:     else if(score>sc3){
 [e ( _sprintf (1 , (. , &U _scorestr :s 2C _score ]
-"224
-[; ;main.c: 224:     while(!PORTAbits.RA0){
+"223
+[; ;main.c: 223:         sc3=score;
 [e ( _glcd_SetCursor (2 , -> -> 64 `i `uc -> -> 7 `i `uc ]
-"225
-[; ;main.c: 225:         if(PORTAbits.RA1){
+"224
+[; ;main.c: 224:     }
 [e ( _glcd_WriteString (3 , , -> &U _scorestr `*uc -> -> 1 `i `uc -> -> 1 `i `uc ]
-"227
-[; ;main.c: 227:         }
+"226
+[; ;main.c: 226:     glcd_FillScreen(1);
 {
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 2 `i 405  ]
+[e $ < -> _i `i -> 3 `i 405  ]
 [e $U 406  ]
 [e :U 405 ]
 {
-"228
-[; ;main.c: 228:         if(PORTAbits.RA2){
+"227
+[; ;main.c: 227:     glcd_SetCursor(24, 3);
 [e ( _glcd_WriteRock (2 , . *U + &U _rocks * -> _i `ux -> -> # *U &U _rocks `ui `ux 0 . *U + &U _rocks * -> _i `ux -> -> # *U &U _rocks `ui `ux 1 ]
-"229
-[; ;main.c: 229:             if(s>0)s--;
+"228
+[; ;main.c: 228:     glcd_WriteString("Game", 1, 0);
 }
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 2 `i 405  ]
+[e $ < -> _i `i -> 3 `i 405  ]
 [e :U 406 ]
 }
 "231
-[; ;main.c: 231:     }
-[e ( _glcd_PlotPixel (3 , , -> -> 16 `i `uc . _boat 0 -> -> 1 `i `uc ]
+[; ;main.c: 231:     while(!PORTAbits.RA0);
+[e ( _glcd_WriteBoat (2 , . _boat 1 . _boat 0 ]
 "233
-[; ;main.c: 233:         case 0:
-[e = _nb + % _score -> -> 13 `i `ui _score ]
+[; ;main.c: 233:     wait(500);
+[e $ ! == _score -> -> 0 `i `ui 408  ]
+[e ( _wait (1 -> 5000 `i ]
+[e :U 408 ]
 "234
-[; ;main.c: 234:             play();
+[; ;main.c: 234: }
 [e ++ _score -> -> 1 `i `ui ]
 "236
-[; ;main.c: 236:         case 1:
+[; ;main.c: 236: void scores();
 [e ( _wait (1 -> 500 `i ]
 "238
-[; ;main.c: 238:             break;
+[; ;main.c: 238: 
 }
 [e :U 386 ]
-"177
-[; ;main.c: 177:         }
+"178
+[; ;main.c: 178:             boat.posY=48-8;
 [e $ ! != -> _game_over `i -> 0 `i 387  ]
 [e :U 388 ]
-"239
-[; ;main.c: 239:         case 2:
-[e :U 409 ]
-[e :U 408 ]
-[e $U 409  ]
-[e :U 410 ]
 "241
-[; ;main.c: 241:             break;
+[; ;main.c: 241:     sprintf(str1, "1. %d", sc1);
+[e $ ! > _score _sc1 409  ]
+{
+"242
+[; ;main.c: 242:     sprintf(str2, "2. %d", sc2);
+[e = _sc1 _score ]
+"243
+[; ;main.c: 243:     sprintf(str3, "3. %d", sc3);
+}
+[e $U 410  ]
+"244
+[; ;main.c: 244: 
+[e :U 409 ]
+[e $ ! > _score _sc2 411  ]
+{
+"245
+[; ;main.c: 245:     glcd_FillScreen(0);
+[e = _sc2 _score ]
+"246
+[; ;main.c: 246:     glcd_SetCursor(8, 0);
+}
+[e $U 412  ]
+"247
+[; ;main.c: 247:     glcd_WriteString("Scores", 1, 1);
+[e :U 411 ]
+[e $ ! > _score _sc3 413  ]
+{
+"248
+[; ;main.c: 248: 
+[e = _sc3 _score ]
+"249
+[; ;main.c: 249:     glcd_SetCursor(16, 2);
+}
+[e :U 413 ]
+[e :U 412 ]
+[e :U 410 ]
+"251
+[; ;main.c: 251:     glcd_SetCursor(16, 3);
+[e ( _glcd_FillScreen (1 -> -> 1 `i `uc ]
+"252
+[; ;main.c: 252:     glcd_WriteString(str2, 1, 1);
+[e ( _glcd_SetCursor (2 , -> -> 24 `i `uc -> -> 3 `i `uc ]
+"253
+[; ;main.c: 253:     glcd_SetCursor(16, 4);
+[e ( _glcd_WriteString (3 , , :s 3C -> -> 1 `i `uc -> -> 0 `i `uc ]
+"254
+[; ;main.c: 254:     glcd_WriteString(str3, 1, 1);
+[e ( _glcd_SetCursor (2 , -> -> 64 `i `uc -> -> 3 `i `uc ]
+"255
+[; ;main.c: 255:     while(!PORTAbits.RA0);
+[e ( _glcd_WriteString (3 , , :s 4C -> -> 1 `i `uc -> -> 0 `i `uc ]
+"256
+[; ;main.c: 256: 
+[e $U 414  ]
+[e :U 415 ]
+[e :U 414 ]
+[e $ ! != -> . . _PORTAbits 0 0 `i -> 0 `i 415  ]
+[e :U 416 ]
+"258
+[; ;main.c: 258: }
+[e ( _wait (1 -> 500 `i ]
+"259
+[; ;main.c: 259: 
 [e :UE 382 ]
 }
-"247
-[; ;main.c: 247: void main(void) {
+"264
+[; ;main.c: 264: 
+[v _scores `(v ~T0 @X0 1 ef ]
+{
+[e :U _scores ]
+[f ]
+"265
+[; ;main.c: 265: 
+[v _str1 `uc ~T0 @X0 -> 20 `i a ]
+[v _str2 `uc ~T0 @X0 -> 20 `i a ]
+[v _str3 `uc ~T0 @X0 -> 20 `i a ]
+"266
+[; ;main.c: 266:     glcd_SetCursor(16,2);
+[e ( _sprintf (1 , (. , &U _str1 :s 5C _sc1 ]
+"267
+[; ;main.c: 267:     glcd_WriteString("AVOID THE ROCKS!", 0, 1);
+[e ( _sprintf (1 , (. , &U _str2 :s 6C _sc2 ]
+"268
+[; ;main.c: 268: 
+[e ( _sprintf (1 , (. , &U _str3 :s 7C _sc3 ]
+"270
+[; ;main.c: 270:     glcd_WriteString("RA2: ROTATE UP", 0, 1);
+[e ( _glcd_FillScreen (1 -> -> 0 `i `uc ]
+"271
+[; ;main.c: 271: 
+[e ( _glcd_SetCursor (2 , -> -> 8 `i `uc -> -> 0 `i `uc ]
+"272
+[; ;main.c: 272:     glcd_SetCursor(16,5);
+[e ( _glcd_WriteString (3 , , :s 8C -> -> 1 `i `uc -> -> 1 `i `uc ]
+"274
+[; ;main.c: 274: 
+[e ( _glcd_SetCursor (2 , -> -> 16 `i `uc -> -> 2 `i `uc ]
+"275
+[; ;main.c: 275:     while(!PORTAbits.RA0);
+[e ( _glcd_WriteString (3 , , -> &U _str1 `*uc -> -> 1 `i `uc -> -> 1 `i `uc ]
+"276
+[; ;main.c: 276: 
+[e ( _glcd_SetCursor (2 , -> -> 16 `i `uc -> -> 3 `i `uc ]
+"277
+[; ;main.c: 277:     wait(500);
+[e ( _glcd_WriteString (3 , , -> &U _str2 `*uc -> -> 1 `i `uc -> -> 1 `i `uc ]
+"278
+[; ;main.c: 278: }
+[e ( _glcd_SetCursor (2 , -> -> 16 `i `uc -> -> 4 `i `uc ]
+"279
+[; ;main.c: 279: 
+[e ( _glcd_WriteString (3 , , -> &U _str3 `*uc -> -> 1 `i `uc -> -> 1 `i `uc ]
+"280
+[; ;main.c: 280: void menu(){
+[e $U 418  ]
+[e :U 419 ]
+[e :U 418 ]
+[e $ ! != -> . . _PORTAbits 0 0 `i -> 0 `i 419  ]
+[e :U 420 ]
+"282
+[; ;main.c: 282:     do{
+[e ( _wait (1 -> 500 `i ]
+"283
+[; ;main.c: 283: 
+[e :UE 417 ]
+}
+"285
+[; ;main.c: 285:             if(s<2)s++;
+[v _help `(v ~T0 @X0 1 ef ]
+{
+[e :U _help ]
+[f ]
+"286
+[; ;main.c: 286:             else s=0;
+[e ( _glcd_FillScreen (1 -> -> 0 `i `uc ]
+"287
+[; ;main.c: 287:         }
+[e ( _glcd_SetCursor (2 , -> -> 8 `i `uc -> -> 0 `i `uc ]
+"288
+[; ;main.c: 288:         if(PORTAbits.RA2){
+[e ( _glcd_WriteString (3 , , :s 9C -> -> 1 `i `uc -> -> 1 `i `uc ]
+"291
+[; ;main.c: 291:         }
+[e ( _glcd_SetCursor (2 , -> -> 16 `i `uc -> -> 2 `i `uc ]
+"292
+[; ;main.c: 292:         glcd_FillScreen(0);
+[e ( _glcd_WriteString (3 , , :s 10C -> -> 0 `i `uc -> -> 1 `i `uc ]
+"294
+[; ;main.c: 294:         glcd_WriteString("PADDL", 1, 1);
+[e ( _glcd_SetCursor (2 , -> -> 16 `i `uc -> -> 4 `i `uc ]
+"295
+[; ;main.c: 295:         glcd_SetCursor(64, 0);
+[e ( _glcd_WriteString (3 , , :s 11C -> -> 0 `i `uc -> -> 1 `i `uc ]
+"297
+[; ;main.c: 297: 
+[e ( _glcd_SetCursor (2 , -> -> 16 `i `uc -> -> 5 `i `uc ]
+"298
+[; ;main.c: 298:         glcd_SetCursor(16, 2);
+[e ( _glcd_WriteString (3 , , :s 12C -> -> 0 `i `uc -> -> 1 `i `uc ]
+"300
+[; ;main.c: 300: 
+[e $U 422  ]
+[e :U 423 ]
+[e :U 422 ]
+[e $ ! != -> . . _PORTAbits 0 0 `i -> 0 `i 423  ]
+[e :U 424 ]
+"302
+[; ;main.c: 302:         glcd_WriteString("Scores", 1, 1);
+[e ( _wait (1 -> 500 `i ]
+"303
+[; ;main.c: 303: 
+[e :UE 421 ]
+}
+"305
+[; ;main.c: 305:         glcd_WriteString("Help", 1, 1);
 [v _menu `(v ~T0 @X0 1 ef ]
 {
 [e :U _menu ]
 [f ]
-"248
-[; ;main.c: 248:     initMyPIC18F();
+"306
+[; ;main.c: 306: 
 [v _s `uc ~T0 @X0 1 a ]
 [e = _s -> -> 0 `i `uc ]
-"249
-[; ;main.c: 249:     glcd_Init(1);
-[e $U 412  ]
-[e :U 413 ]
+"307
+[; ;main.c: 307:         glcd_SetCursor (96, 2+s);
+[e :U 428 ]
 {
-"250
-[; ;main.c: 250: 
-[e $ ! != -> . . _PORTAbits 0 1 `i -> 0 `i 415  ]
+"309
+[; ;main.c: 309: 
+[e $ ! != -> . . _PORTAbits 0 1 `i -> 0 `i 429  ]
 {
-"251
-[; ;main.c: 251:     play();
-[e $ ! < -> _s `i -> 2 `i 416  ]
+"310
+[; ;main.c: 310:         wait(500);
+[e $ ! < -> _s `i -> 2 `i 430  ]
 [e ++ _s -> -> 1 `i `uc ]
-[e :U 416 ]
-"252
-[; ;main.c: 252: 
+[e $U 431  ]
+"311
+[; ;main.c: 311:     }while(!PORTAbits.RA0);
+[e :U 430 ]
+[e = _s -> -> 0 `i `uc ]
+[e :U 431 ]
+"312
+[; ;main.c: 312:     wait(500);
 }
-[e :U 415 ]
-"253
-[; ;main.c: 253: 
-[e $ ! != -> . . _PORTAbits 0 2 `i -> 0 `i 417  ]
+[e :U 429 ]
+"313
+[; ;main.c: 313: 
+[e $ ! != -> . . _PORTAbits 0 2 `i -> 0 `i 432  ]
 {
-"254
-[; ;main.c: 254:     return;
-[e $ ! > -> _s `i -> 0 `i 418  ]
+"314
+[; ;main.c: 314:     switch(s){
+[e $ ! > -> _s `i -> 0 `i 433  ]
 [e -- _s -> -> 1 `i `uc ]
-[e :U 418 ]
-"255
-[; ;main.c: 255: }
+[e $U 434  ]
+"315
+[; ;main.c: 315:         case 0:
+[e :U 433 ]
+[e = _s -> -> 2 `i `uc ]
+[e :U 434 ]
+"316
+[; ;main.c: 316:             play();
 }
-[e :U 417 ]
-"256
+[e :U 432 ]
+"317
+[; ;main.c: 317:             break;
+[e ( _glcd_FillScreen (1 -> -> 0 `i `uc ]
+"318
+[; ;main.c: 318:         case 1:
+[e ( _glcd_SetCursor (2 , -> -> 24 `i `uc -> -> 0 `i `uc ]
+"319
+[; ;main.c: 319:             scores();
+[e ( _glcd_WriteString (3 , , :s 13C -> -> 1 `i `uc -> -> 1 `i `uc ]
+"320
+[; ;main.c: 320:             break;
+[e ( _glcd_SetCursor (2 , -> -> 64 `i `uc -> -> 0 `i `uc ]
+"321
+[; ;main.c: 321:         case 2:
+[e ( _glcd_WriteString (3 , , :s 14C -> -> 1 `i `uc -> -> 1 `i `uc ]
+"323
+[; ;main.c: 323:             break;
+[e ( _glcd_SetCursor (2 , -> -> 16 `i `uc -> -> 2 `i `uc ]
+"324
+[; ;main.c: 324:         default:
+[e ( _glcd_WriteString (3 , , :s 15C -> -> 1 `i `uc -> -> 1 `i `uc ]
+"326
+[; ;main.c: 326:     }
+[e ( _glcd_SetCursor (2 , -> -> 16 `i `uc -> -> 3 `i `uc ]
+"327
+[; ;main.c: 327: }
+[e ( _glcd_WriteString (3 , , :s 16C -> -> 1 `i `uc -> -> 1 `i `uc ]
+"329
+[; ;main.c: 329: void main(void) {
+[e ( _glcd_SetCursor (2 , -> -> 16 `i `uc -> -> 4 `i `uc ]
+"330
+[; ;main.c: 330:     initMyPIC18F();
+[e ( _glcd_WriteString (3 , , :s 17C -> -> 1 `i `uc -> -> 1 `i `uc ]
+"332
+[; ;main.c: 332:     sc1=0; sc2=0; sc3=0;
+[e ( _glcd_SetCursor (2 , -> -> 96 `i `uc -> + -> 2 `i -> _s `i `uc ]
+"333
+[; ;main.c: 333: 
+[e ( _glcd_WriteChar8X8 (2 , -> -> 60 `ui `uc -> -> 1 `i `uc ]
+"335
+[; ;main.c: 335: 
+[e ( _wait (1 -> 500 `i ]
+"336
+[; ;main.c: 336:     return;
 }
-[e :U 412 ]
-"249
-[; ;main.c: 249:     glcd_Init(1);
-[e $ ! != -> . . _PORTAbits 0 0 `i -> 0 `i 413  ]
-[e :U 414 ]
-"257
-[e $U 420  ]
+[e $ ! != -> . . _PORTAbits 0 0 `i -> 0 `i 428  ]
+[e :U 427 ]
+"337
+[; ;main.c: 337: }
+[e ( _wait (1 -> 500 `i ]
+"339
+[e $U 436  ]
 {
-"258
-[e :U 421 ]
-"259
+"340
+[e :U 437 ]
+"341
 [e ( _play ..  ]
-"260
-[e $U 419  ]
-"261
-[e :U 422 ]
-"263
-[e $U 419  ]
-"264
-[e :U 423 ]
-"266
-[e $U 419  ]
-"267
-[e :U 424 ]
-"268
+"342
+[e $U 435  ]
+"343
+[e :U 438 ]
+"344
+[e ( _scores ..  ]
+"345
+[e $U 435  ]
+"346
+[e :U 439 ]
+"347
+[e ( _help ..  ]
+"348
+[e $U 435  ]
+"349
+[e :U 440 ]
+"350
 [e ( _play ..  ]
-"269
+"351
 }
-[e $U 419  ]
-[e :U 420 ]
-[e [\ -> _s `i , $ -> 0 `i 421
- , $ -> 1 `i 422
- , $ -> 2 `i 423
- 424 ]
-[e :U 419 ]
-"270
-[e :UE 411 ]
+[e $U 435  ]
+[e :U 436 ]
+[e [\ -> _s `i , $ -> 0 `i 437
+ , $ -> 1 `i 438
+ , $ -> 2 `i 439
+ 440 ]
+[e :U 435 ]
+"352
+[e :UE 425 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"272
+"354
 [v _main `(v ~T0 @X0 1 ef ]
 {
 [e :U _main ]
 [f ]
-"273
+"355
 [e ( _initMyPIC18F ..  ]
-"274
+"356
 [e ( _glcd_Init (1 -> -> 1 `i `uc ]
-"276
-[e ( _play ..  ]
-"279
-[e $UE 425  ]
-"280
-[e :UE 425 ]
+"357
+[e = _sc1 -> -> 0 `i `ui ]
+[e = _sc2 -> -> 0 `i `ui ]
+[e = _sc3 -> -> 0 `i `ui ]
+"359
+[e :U 443 ]
+[e ( _menu ..  ]
+[e :U 442 ]
+[e $U 443  ]
+[e :U 444 ]
+"361
+[e $UE 441  ]
+"362
+[e :UE 441 ]
 }
 [p f _sprintf 8388736 ]
+[a 15C 80 108 97 121 0 ]
+[a 8C 83 99 111 114 101 115 0 ]
+[a 16C 83 99 111 114 101 115 0 ]
+[a 4C 79 118 101 114 0 ]
+[a 9C 72 101 108 112 0 ]
+[a 17C 72 101 108 112 0 ]
+[a 3C 71 97 109 101 0 ]
 [a 2C 61 37 100 0 ]
+[a 7C 51 46 32 37 100 0 ]
+[a 6C 50 46 32 37 100 0 ]
+[a 5C 49 46 32 37 100 0 ]
+[a 14C 69 66 79 65 84 0 ]
+[a 11C 82 65 50 58 32 82 79 84 65 84 69 32 85 80 0 ]
+[a 12C 82 65 49 58 32 82 79 84 65 84 69 32 68 79 87 78 0 ]
+[a 13C 80 65 68 68 76 0 ]
 [a 1C 83 67 79 82 69 0 ]
+[a 10C 65 86 79 73 68 32 84 72 69 32 82 79 67 75 83 33 0 ]

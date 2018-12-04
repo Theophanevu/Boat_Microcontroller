@@ -5837,7 +5837,7 @@ extern void glcd_WriteRock(signed char posX, unsigned char posY);
 extern void glcd_WriteChar3x6( unsigned char ch, unsigned char color);
 extern void glcd_WriteString(unsigned char str[],unsigned char font,unsigned char color);
 extern void glcd_Image(unsigned char bitmap[1024]);
-void glcd_Boat8x8(signed char angle);
+void glcd_WriteBoat(signed char angle, unsigned char posY);
 # 13 "main.c" 2
 
 
@@ -5918,6 +5918,11 @@ const unsigned char fond[] = {
 0x0C, 0x18, 0xF8, 0x30, 0x71, 0xE1, 0xC1, 0x81, 0x03, 0x00, 0x20, 0x61, 0x21, 0x01, 0x83, 0xCF
 };
 
+
+unsigned int sc1;
+unsigned int sc2;
+unsigned int sc3;
+
 typedef struct rock{
     signed char posX;
     unsigned char posY;
@@ -5928,11 +5933,6 @@ typedef struct boat{
     unsigned char posY;
     signed char angle;
 }t_boat;
-
-char up_key=0;
-char down_key=0;
-
-unsigned int nb=0;
 
 
 void initMyPIC18F(void)
@@ -5980,18 +5980,19 @@ void play(){
     unsigned char game_over, i;
     unsigned int score;
     t_boat boat;
-    t_rock rocks[2];
+    t_rock rocks[3];
     char scorestr[20];
 
 
-    boat.posY=31;
+    boat.posY=28;
     boat.angle=0;
 
 
-    for(i=0; i<2; i++){
+    for(i=0; i<3; i++){
         rocks[i]=initRock();
-        rocks[i].posX=127-(2 -1-i)*(128/2);
+        rocks[i].posX=127-(3 -1-i)*(128/3);
     }
+
 
 
     game_over=0;
@@ -6006,13 +6007,11 @@ void play(){
     while(!game_over)
     {
 
-        if(PORTAbits.RA0){
+        if(PORTAbits.RA2){
             boat.angle++;
-
         }
         if(PORTAbits.RA1){
             boat.angle--;
-
         }
 
         if(boat.angle>2){
@@ -6029,19 +6028,19 @@ void play(){
         if(boat.posY < 16){
             boat.posY=16;
         }
-        else if(boat.posY > 47){
-            boat.posY=47;
+        else if(boat.posY > 48-8){
+            boat.posY=48-8;
         }
 
 
-        for(i=0;i<2;i++){
+        for(i=0;i<3;i++){
             if(rocks[i].posX>-6)rocks[i].posX-=2;
             else(rocks[i]=initRock());
         }
 
 
-        for(i=0;i<2;i++){
-            if(((rocks[i].posX-16)<8)&&(rocks[i].posX-16>-8)&&((boat.posY/8)==rocks[i].posY)){
+        for(i=0;i<3;i++){
+            if(((rocks[i].posX-16)<8)&&(rocks[i].posX-16>-8)&&((rocks[i].posY*8-boat.posY)<8)&&((rocks[i].posY*8-boat.posY)>-8)){
                 game_over=1;
             }
         }
@@ -6053,45 +6052,128 @@ void play(){
         glcd_SetCursor(64,7);
         glcd_WriteString(scorestr, 1, 1);
 
-        for(i=0; i<2; i++){
+        for(i=0; i<3; i++){
             glcd_WriteRock(rocks[i].posX, rocks[i].posY);
         }
 
-        glcd_PlotPixel(16, boat.posY, 1);
 
-        nb=score%13+score;
+        glcd_WriteBoat(boat.angle, boat.posY);
+
+        if(score==0)wait(5000);
         score++;
 
         wait(500);
 
     }
-    while(1);
 
+
+    if(score>sc1){
+        sc1=score;
+    }
+    else if(score>sc2){
+        sc2=score;
+    }
+    else if(score>sc3){
+        sc3=score;
+    }
+
+    glcd_FillScreen(1);
+    glcd_SetCursor(24, 3);
+    glcd_WriteString("Game", 1, 0);
+    glcd_SetCursor(64, 3);
+    glcd_WriteString("Over", 1, 0);
+    while(!PORTAbits.RA0);
+
+    wait(500);
 }
 
 void scores();
 void help();
 
+void scores(){
+    char str1[20], str2[20], str3[20];
+    sprintf(str1, "1. %d", sc1);
+    sprintf(str2, "2. %d", sc2);
+    sprintf(str3, "3. %d", sc3);
+
+    glcd_FillScreen(0);
+    glcd_SetCursor(8, 0);
+    glcd_WriteString("Scores", 1, 1);
+
+    glcd_SetCursor(16, 2);
+    glcd_WriteString(str1, 1, 1);
+    glcd_SetCursor(16, 3);
+    glcd_WriteString(str2, 1, 1);
+    glcd_SetCursor(16, 4);
+    glcd_WriteString(str3, 1, 1);
+    while(!PORTAbits.RA0);
+
+    wait(500);
+}
+
+void help(){
+    glcd_FillScreen(0);
+    glcd_SetCursor(8,0);
+    glcd_WriteString("Help", 1, 1);
+
+
+    glcd_SetCursor(16,2);
+    glcd_WriteString("AVOID THE ROCKS!", 0, 1);
+
+    glcd_SetCursor(16,4);
+    glcd_WriteString("RA2: ROTATE UP", 0, 1);
+
+    glcd_SetCursor(16,5);
+    glcd_WriteString("RA1: ROTATE DOWN", 0, 1);
+
+    while(!PORTAbits.RA0);
+
+    wait(500);
+}
 
 void menu(){
     unsigned char s=0;
-    while(!PORTAbits.RA0){
+    do{
+
         if(PORTAbits.RA1){
             if(s<2)s++;
+            else s=0;
         }
         if(PORTAbits.RA2){
             if(s>0)s--;
+            else s=2;
         }
-    }
+        glcd_FillScreen(0);
+        glcd_SetCursor(24, 0);
+        glcd_WriteString("PADDL", 1, 1);
+        glcd_SetCursor(64, 0);
+        glcd_WriteString("EBOAT", 1, 1);
+
+        glcd_SetCursor(16, 2);
+        glcd_WriteString("Play", 1, 1);
+
+        glcd_SetCursor(16, 3);
+        glcd_WriteString("Scores", 1, 1);
+
+        glcd_SetCursor(16, 4);
+        glcd_WriteString("Help", 1, 1);
+
+        glcd_SetCursor (96, 2+s);
+        glcd_WriteChar8X8('<', 1);
+
+        wait(500);
+    }while(!PORTAbits.RA0);
+    wait(500);
+
     switch(s){
         case 0:
             play();
             break;
         case 1:
-
+            scores();
             break;
         case 2:
-
+            help();
             break;
         default:
             play();
@@ -6101,9 +6183,9 @@ void menu(){
 void main(void) {
     initMyPIC18F();
     glcd_Init(1);
+    sc1=0; sc2=0; sc3=0;
 
-    play();
-
+    while(1)menu();
 
     return;
 }

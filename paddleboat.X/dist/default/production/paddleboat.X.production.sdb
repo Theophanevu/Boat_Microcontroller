@@ -31,8 +31,6 @@
 [v ___ftmul __ftmul `(f  1 e 4 0 ]
 "19 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c99\common\ftsub.c
 [v ___ftsub __ftsub `(f  1 e 4 0 ]
-"7 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c99\common\lwmod.c
-[v ___lwmod __lwmod `(ui  1 e 2 0 ]
 "8 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c99\common\nf_fputc.c
 [v _fputc fputc `(i  1 e 2 0 ]
 "8 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c99\common\nf_fputs.c
@@ -59,41 +57,47 @@
 [v ___lmul __lmul `(ul  1 e 4 0 ]
 "91 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c99\common\Umul64.c
 [v ___omul __omul `(uo  1 e 8 0 ]
-"428 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\glcd.c
+"338 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\glcd.c
+[v _glcd_WriteBoat glcd_WriteBoat `(v  1 e 1 0 ]
+"399
 [v _glcd_Init glcd_Init `(v  1 e 1 0 ]
-"468
+"439
 [v _glcd_WriteByte glcd_WriteByte `(v  1 e 1 0 ]
-"498
+"469
 [v _glcd_FillRiver glcd_FillRiver `(v  1 e 1 0 ]
-"524
+"495
 [v _glcd_FillScreen glcd_FillScreen `(v  1 e 1 0 ]
-"548
+"519
 [v _glcd_Image glcd_Image `(v  1 e 1 0 ]
-"583
+"554
 [v _glcd_ReadByte glcd_ReadByte `(uc  1 e 1 0 ]
-"619
-[v _glcd_PlotPixel glcd_PlotPixel `(v  1 e 1 0 ]
-"658
+"629
 [v _glcd_SetCursor glcd_SetCursor `(v  1 e 1 0 ]
-"684
+"655
 [v _glcd_WriteChar8X8 glcd_WriteChar8X8 `(v  1 e 1 0 ]
-"729
+"700
 [v _glcd_WriteRock glcd_WriteRock `(v  1 e 1 0 ]
-"783
+"754
 [v _glcd_WriteChar3x6 glcd_WriteChar3x6 `(v  1 e 1 0 ]
-"828
+"799
 [v _glcd_WriteString glcd_WriteString `(v  1 e 1 0 ]
 "109 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\main.c
 [v _initMyPIC18F initMyPIC18F `(v  1 e 1 0 ]
 "133
 [v _wait wait `(v  1 e 1 0 ]
-"92
+"97
 [s S35 rock 2 `c 1 posX 1 0 `uc 1 posY 1 1 ]
 "142
 [v _initRock initRock `(S35  1 e 2 0 ]
 "149
 [v _play play `(v  1 e 1 0 ]
-"272
+"264
+[v _scores scores `(v  1 e 1 0 ]
+"285
+[v _help help `(v  1 e 1 0 ]
+"305
+[v _menu menu `(v  1 e 1 0 ]
+"354
 [v _main main `(v  1 e 1 0 ]
 [s S63 . 1 `uc 1 RA0 1 0 :1:0 
 `uc 1 RA1 1 0 :1:1 
@@ -133,7 +137,7 @@
 [v _PORTD PORTD `VEuc  1 e 1 @3971 ]
 "2826
 [v _PORTE PORTE `VEuc  1 e 1 @3972 ]
-[s S203 . 1 `uc 1 LATB0 1 0 :1:0 
+[s S229 . 1 `uc 1 LATB0 1 0 :1:0 
 `uc 1 LATB1 1 0 :1:1 
 `uc 1 LATB2 1 0 :1:2 
 `uc 1 LATB3 1 0 :1:3 
@@ -143,7 +147,7 @@
 `uc 1 LATB7 1 0 :1:7 
 ]
 "3100
-[s S212 . 1 `uc 1 LB0 1 0 :1:0 
+[s S238 . 1 `uc 1 LB0 1 0 :1:0 
 `uc 1 LB1 1 0 :1:1 
 `uc 1 LB2 1 0 :1:2 
 `uc 1 LB3 1 0 :1:3 
@@ -152,8 +156,8 @@
 `uc 1 LB6 1 0 :1:6 
 `uc 1 LB7 1 0 :1:7 
 ]
-[u S221 . 1 `S203 1 . 1 0 `S212 1 . 1 0 ]
-[v _LATBbits LATBbits `VES221  1 e 1 @3978 ]
+[u S247 . 1 `S229 1 . 1 0 `S238 1 . 1 0 ]
+[v _LATBbits LATBbits `VES247  1 e 1 @3978 ]
 "3263
 [v _LATD LATD `VEuc  1 e 1 @3980 ]
 "3427
@@ -180,23 +184,43 @@
 [v _nout nout `i  1 s 2 nout ]
 "7 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c99\common\rand.c
 [v _seed seed `uo  1 s 8 seed ]
-"77 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\glcd.c
+"10 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\glcd.c
 [v _Font3x6 Font3x6 `C[65][3]uc  1 e 195 0 ]
-"149
+"82
 [v _Font8x8 Font8x8 `C[2048]uc  1 e 2048 0 ]
-"395
+"328
 [v _x x `uc  1 e 1 0 ]
 [v _y y `uc  1 e 1 0 ]
-"397
+"330
 [v _Boat_matrix Boat_matrix `C[40]uc  1 e 40 0 ]
 "25 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\main.c
 [v _fond fond `C[1024]uc  1 e 1024 0 ]
-"106
-[v _nb nb `ui  1 e 2 0 ]
-"272
+"93
+[v _sc1 sc1 `ui  1 e 2 0 ]
+"94
+[v _sc2 sc2 `ui  1 e 2 0 ]
+"95
+[v _sc3 sc3 `ui  1 e 2 0 ]
+"354
 [v _main main `(v  1 e 1 0 ]
 {
-"280
+"362
+} 0
+"305
+[v _menu menu `(v  1 e 1 0 ]
+{
+"306
+[v menu@s s `uc  1 a 1 70 ]
+"352
+} 0
+"264
+[v _scores scores `(v  1 e 1 0 ]
+{
+"265
+[v scores@str3 str3 `[20]uc  1 a 20 50 ]
+[v scores@str2 str2 `[20]uc  1 a 20 30 ]
+[v scores@str1 str1 `[20]uc  1 a 20 10 ]
+"283
 } 0
 "149
 [v _play play `(v  1 e 1 0 ]
@@ -205,33 +229,23 @@
 [v play@scorestr scorestr `[20]uc  1 a 20 14 ]
 [s S35 rock 2 `c 1 posX 1 0 `uc 1 posY 1 1 ]
 "154
-[v play@rocks rocks `[2]S35  1 a 4 37 ]
+[v play@rocks rocks `[3]S35  1 a 6 35 ]
 [s S42 boat 2 `uc 1 posY 1 0 `c 1 angle 1 1 ]
 "153
-[v play@boat boat `S42  1 a 2 41 ]
+[v play@boat boat `S42  1 a 2 43 ]
 "152
-[v play@score score `ui  1 a 2 35 ]
+[v play@score score `ui  1 a 2 41 ]
 "151
-[v play@i i `uc  1 a 1 43 ]
+[v play@i i `uc  1 a 1 45 ]
 [v play@game_over game_over `uc  1 a 1 34 ]
-"241
-} 0
-"133
-[v _wait wait `(v  1 e 1 0 ]
-{
-"134
-[v wait@j j `i  1 a 2 5 ]
-[v wait@i i `i  1 a 2 3 ]
-"133
-[v wait@val val `i  1 p 2 0 ]
-"140
+"259
 } 0
 "9 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c99\common\nf_sprintf.c
 [v _sprintf sprintf `(i  1 e 2 0 ]
 {
-[s S848 _IO_FILE 6 `*.39uc 1 buffer 2 0 `i 1 count 2 2 `i 1 limit 2 4 ]
+[s S878 _IO_FILE 6 `*.39uc 1 buffer 2 0 `i 1 count 2 2 `i 1 limit 2 4 ]
 "13
-[v sprintf@f f `S848  1 a 6 4 ]
+[v sprintf@f f `S878  1 a 6 4 ]
 "12
 [v sprintf@ap ap `[1]*.39v  1 a 2 2 ]
 "11
@@ -246,9 +260,9 @@
 {
 "1371
 [v vfprintf@cfmt cfmt `*.25uc  1 a 2 85 ]
-[s S340 _IO_FILE 0 ]
+[s S370 _IO_FILE 0 ]
 "1368
-[v vfprintf@fp fp `*.39S340  1 p 2 79 ]
+[v vfprintf@fp fp `*.39S370  1 p 2 79 ]
 [v vfprintf@fmt fmt `*.25Cuc  1 p 2 81 ]
 [v vfprintf@ap ap `*.39*.39v  1 p 2 83 ]
 "1382
@@ -258,9 +272,9 @@
 {
 "674
 [v vfpfcnvrt@ll ll `o  1 a 8 71 ]
-[s S340 _IO_FILE 0 ]
+[s S370 _IO_FILE 0 ]
 "670
-[v vfpfcnvrt@fp fp `*.39S340  1 p 2 63 ]
+[v vfpfcnvrt@fp fp `*.39S370  1 p 2 63 ]
 [v vfpfcnvrt@fmt fmt `*.39*.25uc  1 p 2 65 ]
 [v vfpfcnvrt@ap ap `*.39*.39v  1 p 2 67 ]
 "1365
@@ -275,9 +289,9 @@
 [v dtoa@s s `i  1 a 2 51 ]
 [v dtoa@w w `i  1 a 2 49 ]
 [v dtoa@p p `i  1 a 2 47 ]
-[s S340 _IO_FILE 0 ]
+[s S370 _IO_FILE 0 ]
 "274
-[v dtoa@fp fp `*.39S340  1 p 2 27 ]
+[v dtoa@fp fp `*.39S370  1 p 2 27 ]
 [v dtoa@d d `o  1 p 8 29 ]
 "315
 } 0
@@ -287,9 +301,9 @@
 "74
 [v pad@w w `i  1 a 2 25 ]
 [v pad@i i `i  1 a 2 23 ]
-[s S340 _IO_FILE 0 ]
+[s S370 _IO_FILE 0 ]
 "72
-[v pad@fp fp `*.39S340  1 p 2 16 ]
+[v pad@fp fp `*.39S370  1 p 2 16 ]
 [v pad@buf buf `*.39uc  1 p 2 18 ]
 [v pad@p p `i  1 p 2 20 ]
 "95
@@ -312,16 +326,16 @@
 [v fputs@c c `uc  1 a 1 13 ]
 "8
 [v fputs@s s `*.39Cuc  1 p 2 9 ]
-[s S848 _IO_FILE 6 `*.39uc 1 buffer 2 0 `i 1 count 2 2 `i 1 limit 2 4 ]
-[v fputs@fp fp `*.39S848  1 p 2 11 ]
+[s S878 _IO_FILE 6 `*.39uc 1 buffer 2 0 `i 1 count 2 2 `i 1 limit 2 4 ]
+[v fputs@fp fp `*.39S878  1 p 2 11 ]
 "19
 } 0
 "8 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c99\common\nf_fputc.c
 [v _fputc fputc `(i  1 e 2 0 ]
 {
 [v fputc@c c `i  1 p 2 0 ]
-[s S848 _IO_FILE 6 `*.39uc 1 buffer 2 0 `i 1 count 2 2 `i 1 limit 2 4 ]
-[v fputc@fp fp `*.39S848  1 p 2 2 ]
+[s S878 _IO_FILE 6 `*.39uc 1 buffer 2 0 `i 1 count 2 2 `i 1 limit 2 4 ]
+[v fputc@fp fp `*.39S878  1 p 2 2 ]
 "21
 } 0
 "7 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c99\common\putch.c
@@ -359,7 +373,7 @@
 [v ___aodiv@divisor divisor `o  1 p 8 8 ]
 "43
 } 0
-"92 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\main.c
+"97 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\main.c
 [s S35 rock 2 `c 1 posX 1 0 `uc 1 posY 1 1 ]
 "142
 [v _initRock initRock `(S35  1 e 2 0 ]
@@ -383,113 +397,63 @@
 [v ___omul@multiplicand multiplicand `uo  1 p 8 8 ]
 "354
 } 0
-"828 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\glcd.c
-[v _glcd_WriteString glcd_WriteString `(v  1 e 1 0 ]
-{
-[v glcd_WriteString@str str `*.35uc  1 p 2 19 ]
-[v glcd_WriteString@font font `uc  1 p 1 21 ]
-[v glcd_WriteString@color color `uc  1 p 1 22 ]
-"838
-} 0
-"684
-[v _glcd_WriteChar8X8 glcd_WriteChar8X8 `(v  1 e 1 0 ]
-{
-[v glcd_WriteChar8X8@ch ch `uc  1 a 1 wreg ]
-"688
-[v glcd_WriteChar8X8@chr chr `ui  1 a 2 13 ]
-"687
-[v glcd_WriteChar8X8@side side `uc  1 a 1 18 ]
-"686
-[v glcd_WriteChar8X8@i i `uc  1 a 1 17 ]
-[v glcd_WriteChar8X8@xpos xpos `uc  1 a 1 16 ]
-"684
-[v glcd_WriteChar8X8@ch ch `uc  1 a 1 wreg ]
-[v glcd_WriteChar8X8@color color `uc  1 p 1 10 ]
-"687
-[v glcd_WriteChar8X8@ch ch `uc  1 a 1 15 ]
-"726
-} 0
-"783
-[v _glcd_WriteChar3x6 glcd_WriteChar3x6 `(v  1 e 1 0 ]
-{
-[v glcd_WriteChar3x6@ch ch `uc  1 a 1 wreg ]
-"786
-[v glcd_WriteChar3x6@side side `uc  1 a 1 16 ]
-"785
-[v glcd_WriteChar3x6@i i `uc  1 a 1 15 ]
-[v glcd_WriteChar3x6@xpos xpos `uc  1 a 1 13 ]
-"783
-[v glcd_WriteChar3x6@ch ch `uc  1 a 1 wreg ]
-[v glcd_WriteChar3x6@color color `uc  1 p 1 10 ]
-"786
-[v glcd_WriteChar3x6@ch ch `uc  1 a 1 14 ]
-"823
-} 0
-"729
+"700 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\glcd.c
 [v _glcd_WriteRock glcd_WriteRock `(v  1 e 1 0 ]
 {
 [v glcd_WriteRock@posX posX `c  1 a 1 wreg ]
-"736
-[v glcd_WriteRock@chr chr `ui  1 a 2 21 ]
-"735
-[v glcd_WriteRock@side side `uc  1 a 1 27 ]
-"734
-[v glcd_WriteRock@i i `uc  1 a 1 26 ]
-[v glcd_WriteRock@xpos xpos `uc  1 a 1 25 ]
-"737
-[v glcd_WriteRock@d2 d2 `uc  1 a 1 24 ]
-[v glcd_WriteRock@d d `uc  1 a 1 23 ]
-"732
-[v glcd_WriteRock@color color `uc  1 a 1 20 ]
-"731
-[v glcd_WriteRock@ch ch `uc  1 a 1 19 ]
-"729
+"707
+[v glcd_WriteRock@chr chr `ui  1 a 2 13 ]
+"706
+[v glcd_WriteRock@side side `uc  1 a 1 19 ]
+"705
+[v glcd_WriteRock@i i `uc  1 a 1 18 ]
+[v glcd_WriteRock@xpos xpos `uc  1 a 1 17 ]
+"708
+[v glcd_WriteRock@d2 d2 `uc  1 a 1 16 ]
+[v glcd_WriteRock@d d `uc  1 a 1 15 ]
+"703
+[v glcd_WriteRock@color color `uc  1 a 1 12 ]
+"702
+[v glcd_WriteRock@ch ch `uc  1 a 1 11 ]
+"700
 [v glcd_WriteRock@posX posX `c  1 a 1 wreg ]
-[v glcd_WriteRock@posY posY `uc  1 p 1 13 ]
-"731
-[v glcd_WriteRock@posX posX `c  1 a 1 28 ]
-"777
+[v glcd_WriteRock@posY posY `uc  1 p 1 5 ]
+"702
+[v glcd_WriteRock@posX posX `c  1 a 1 20 ]
+"748
 } 0
-"658
-[v _glcd_SetCursor glcd_SetCursor `(v  1 e 1 0 ]
+"338
+[v _glcd_WriteBoat glcd_WriteBoat `(v  1 e 1 0 ]
 {
-[v glcd_SetCursor@xpos xpos `uc  1 a 1 wreg ]
-"660
-[v glcd_SetCursor@side side `uc  1 a 1 11 ]
-"658
-[v glcd_SetCursor@xpos xpos `uc  1 a 1 wreg ]
-[v glcd_SetCursor@ypos ypos `uc  1 p 1 10 ]
-"660
-[v glcd_SetCursor@xpos xpos `uc  1 a 1 12 ]
-"678
+[v glcd_WriteBoat@angle angle `c  1 a 1 wreg ]
+"358
+[v glcd_WriteBoat@chr chr `ui  1 a 2 14 ]
+"357
+[v glcd_WriteBoat@i i `uc  1 a 1 20 ]
+"341
+[v glcd_WriteBoat@ypos ypos `uc  1 a 1 19 ]
+"344
+[v glcd_WriteBoat@side side `uc  1 a 1 18 ]
+"340
+[v glcd_WriteBoat@xpos xpos `uc  1 a 1 17 ]
+"342
+[v glcd_WriteBoat@carry carry `uc  1 a 1 16 ]
+"338
+[v glcd_WriteBoat@angle angle `c  1 a 1 wreg ]
+[v glcd_WriteBoat@posY posY `uc  1 p 1 8 ]
+"340
+[v glcd_WriteBoat@angle angle `c  1 a 1 13 ]
+"393
 } 0
-"619
-[v _glcd_PlotPixel glcd_PlotPixel `(v  1 e 1 0 ]
+"15 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c99\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
 {
-[v glcd_PlotPixel@xpos xpos `uc  1 a 1 wreg ]
-"622
-[v glcd_PlotPixel@side side `uc  1 a 1 16 ]
-"621
-[v glcd_PlotPixel@data data `uc  1 a 1 15 ]
-"619
-[v glcd_PlotPixel@xpos xpos `uc  1 a 1 wreg ]
-[v glcd_PlotPixel@ypos ypos `uc  1 p 1 10 ]
-[v glcd_PlotPixel@color color `uc  1 p 1 11 ]
-"622
-[v glcd_PlotPixel@xpos xpos `uc  1 a 1 14 ]
-"653
-} 0
-"583
-[v _glcd_ReadByte glcd_ReadByte `(uc  1 e 1 0 ]
-{
-[v glcd_ReadByte@side side `uc  1 a 1 wreg ]
-"585
-[v glcd_ReadByte@data data `uc  1 a 1 1 ]
-"583
-[v glcd_ReadByte@side side `uc  1 a 1 wreg ]
-"587
-[v glcd_ReadByte@side side `uc  1 a 1 0 ]
-"614
+"17
+[v ___wmul@product product `ui  1 a 2 4 ]
+"15
+[v ___wmul@multiplier multiplier `ui  1 p 2 0 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 2 ]
+"53
 } 0
 "7 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c99\common\awdiv.c
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
@@ -504,74 +468,134 @@
 [v ___awdiv@divisor divisor `i  1 p 2 2 ]
 "41
 } 0
-"548 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\glcd.c
+"519 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\glcd.c
 [v _glcd_Image glcd_Image `(v  1 e 1 0 ]
 {
-"551
-[v glcd_Image@ptr ptr `i  1 a 2 14 ]
-"550
-[v glcd_Image@cs cs `uc  1 a 1 18 ]
-"553
-[v glcd_Image@i i `uc  1 a 1 17 ]
-[v glcd_Image@j j `uc  1 a 1 16 ]
-"548
-[v glcd_Image@bitmap bitmap `*.25uc  1 p 2 10 ]
-"578
+"522
+[v glcd_Image@ptr ptr `i  1 a 2 6 ]
+"521
+[v glcd_Image@cs cs `uc  1 a 1 10 ]
+"524
+[v glcd_Image@i i `uc  1 a 1 9 ]
+[v glcd_Image@j j `uc  1 a 1 8 ]
+"519
+[v glcd_Image@bitmap bitmap `*.25uc  1 p 2 2 ]
+"549
 } 0
-"498
+"469
 [v _glcd_FillRiver glcd_FillRiver `(v  1 e 1 0 ]
 {
-"501
-[v glcd_FillRiver@i i `uc  1 a 1 12 ]
-[v glcd_FillRiver@j j `uc  1 a 1 11 ]
-"500
-[v glcd_FillRiver@color color `uc  1 a 1 10 ]
-"519
+"472
+[v glcd_FillRiver@i i `uc  1 a 1 4 ]
+[v glcd_FillRiver@j j `uc  1 a 1 3 ]
+"471
+[v glcd_FillRiver@color color `uc  1 a 1 2 ]
+"490
 } 0
-"7 C:\Program Files (x86)\Microchip\xc8\v2.00\pic\sources\c99\common\lwmod.c
-[v ___lwmod __lwmod `(ui  1 e 2 0 ]
+"285 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\main.c
+[v _help help `(v  1 e 1 0 ]
 {
-"10
-[v ___lwmod@counter counter `uc  1 a 1 4 ]
-"7
-[v ___lwmod@dividend dividend `ui  1 p 2 0 ]
-[v ___lwmod@divisor divisor `ui  1 p 2 2 ]
-"25
+"303
+} 0
+"133
+[v _wait wait `(v  1 e 1 0 ]
+{
+"134
+[v wait@j j `i  1 a 2 5 ]
+[v wait@i i `i  1 a 2 3 ]
+"133
+[v wait@val val `i  1 p 2 0 ]
+"140
+} 0
+"799 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\glcd.c
+[v _glcd_WriteString glcd_WriteString `(v  1 e 1 0 ]
+{
+[v glcd_WriteString@str str `*.35uc  1 p 2 11 ]
+[v glcd_WriteString@font font `uc  1 p 1 13 ]
+[v glcd_WriteString@color color `uc  1 p 1 14 ]
+"809
+} 0
+"655
+[v _glcd_WriteChar8X8 glcd_WriteChar8X8 `(v  1 e 1 0 ]
+{
+[v glcd_WriteChar8X8@ch ch `uc  1 a 1 wreg ]
+"659
+[v glcd_WriteChar8X8@chr chr `ui  1 a 2 5 ]
+"658
+[v glcd_WriteChar8X8@side side `uc  1 a 1 10 ]
+"657
+[v glcd_WriteChar8X8@i i `uc  1 a 1 9 ]
+[v glcd_WriteChar8X8@xpos xpos `uc  1 a 1 8 ]
+"655
+[v glcd_WriteChar8X8@ch ch `uc  1 a 1 wreg ]
+[v glcd_WriteChar8X8@color color `uc  1 p 1 2 ]
+"658
+[v glcd_WriteChar8X8@ch ch `uc  1 a 1 7 ]
+"697
+} 0
+"754
+[v _glcd_WriteChar3x6 glcd_WriteChar3x6 `(v  1 e 1 0 ]
+{
+[v glcd_WriteChar3x6@ch ch `uc  1 a 1 wreg ]
+"757
+[v glcd_WriteChar3x6@side side `uc  1 a 1 8 ]
+"756
+[v glcd_WriteChar3x6@i i `uc  1 a 1 7 ]
+[v glcd_WriteChar3x6@xpos xpos `uc  1 a 1 5 ]
+"754
+[v glcd_WriteChar3x6@ch ch `uc  1 a 1 wreg ]
+[v glcd_WriteChar3x6@color color `uc  1 p 1 2 ]
+"757
+[v glcd_WriteChar3x6@ch ch `uc  1 a 1 6 ]
+"794
+} 0
+"629
+[v _glcd_SetCursor glcd_SetCursor `(v  1 e 1 0 ]
+{
+[v glcd_SetCursor@xpos xpos `uc  1 a 1 wreg ]
+"631
+[v glcd_SetCursor@side side `uc  1 a 1 3 ]
+"629
+[v glcd_SetCursor@xpos xpos `uc  1 a 1 wreg ]
+[v glcd_SetCursor@ypos ypos `uc  1 p 1 2 ]
+"631
+[v glcd_SetCursor@xpos xpos `uc  1 a 1 4 ]
+"649
 } 0
 "109 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\main.c
 [v _initMyPIC18F initMyPIC18F `(v  1 e 1 0 ]
 {
 "131
 } 0
-"428 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\glcd.c
+"399 D:\Users\Albert\Documents\ECE\ING4 2018-2019\Embedded Processors and Microcontrollers\Paddle_Boat\paddleboat.X\glcd.c
 [v _glcd_Init glcd_Init `(v  1 e 1 0 ]
 {
 [v glcd_Init@mode mode `uc  1 a 1 wreg ]
 [v glcd_Init@mode mode `uc  1 a 1 wreg ]
-"432
-[v glcd_Init@mode mode `uc  1 a 1 13 ]
-"463
+"403
+[v glcd_Init@mode mode `uc  1 a 1 5 ]
+"434
 } 0
-"524
+"495
 [v _glcd_FillScreen glcd_FillScreen `(v  1 e 1 0 ]
 {
 [v glcd_FillScreen@color color `uc  1 a 1 wreg ]
-"526
-[v glcd_FillScreen@i i `uc  1 a 1 12 ]
-[v glcd_FillScreen@j j `uc  1 a 1 11 ]
-"524
+"497
+[v glcd_FillScreen@i i `uc  1 a 1 4 ]
+[v glcd_FillScreen@j j `uc  1 a 1 3 ]
+"495
 [v glcd_FillScreen@color color `uc  1 a 1 wreg ]
-"528
-[v glcd_FillScreen@color color `uc  1 a 1 10 ]
-"544
+"499
+[v glcd_FillScreen@color color `uc  1 a 1 2 ]
+"515
 } 0
-"468
+"439
 [v _glcd_WriteByte glcd_WriteByte `(v  1 e 1 0 ]
 {
 [v glcd_WriteByte@side side `uc  1 a 1 wreg ]
 [v glcd_WriteByte@side side `uc  1 a 1 wreg ]
-[v glcd_WriteByte@data data `uc  1 p 1 8 ]
-"470
-[v glcd_WriteByte@side side `uc  1 a 1 9 ]
-"496
+[v glcd_WriteByte@data data `uc  1 p 1 0 ]
+"441
+[v glcd_WriteByte@side side `uc  1 a 1 1 ]
+"467
 } 0

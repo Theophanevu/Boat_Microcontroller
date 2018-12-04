@@ -50,7 +50,7 @@ extern void glcd_WriteRock(signed char posX, unsigned char posY);
 extern void glcd_WriteChar3x6( unsigned char ch, unsigned char color);
 extern void glcd_WriteString(unsigned char str[],unsigned char font,unsigned char color);
 extern void glcd_Image(unsigned char bitmap[1024]);
-void glcd_Boat8x8(signed char angle);
+void glcd_WriteBoat(signed char angle, unsigned char posY);
 
 
 #endif	/* GLCD_H */

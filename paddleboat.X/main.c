@@ -12,7 +12,7 @@
 //#include <time.h>
 #include "glcd.h"
 
-#define ROCKS_NB 2
+#define ROCKS_NB 3
 #define BOAT_POSX 16
 
 #pragma config FOSC = HS 		//oscillator HS
@@ -89,6 +89,11 @@ const unsigned char fond[] = {
 0x0C, 0x18, 0xF8, 0x30, 0x71, 0xE1, 0xC1, 0x81, 0x03, 0x00, 0x20, 0x61, 0x21, 0x01, 0x83, 0xCF
 };
 
+//Global variables
+unsigned int sc1;
+unsigned int sc2;
+unsigned int sc3;
+
 typedef struct rock{
     signed char posX;
     unsigned char posY;
@@ -99,11 +104,6 @@ typedef struct boat{
     unsigned char posY;
     signed char angle; //-2 -1 0 1 2
 }t_boat;
-
-char up_key=0;
-char down_key=0;
-
-unsigned int nb=0;
 
 // --- init the PIC18F device
 void initMyPIC18F(void)
@@ -155,7 +155,7 @@ void play(){
     char scorestr[20];
     
     //Initialize the boat
-    boat.posY=31;
+    boat.posY=28;
     boat.angle=0;
     
     //the rocks
@@ -163,6 +163,7 @@ void play(){
         rocks[i]=initRock();
         rocks[i].posX=127-(ROCKS_NB-1-i)*(128/ROCKS_NB);
     }
+
     
     //and the game
     game_over=0;
@@ -177,13 +178,11 @@ void play(){
     while(!game_over)
     { 
         //Update command
-        if(PORTAbits.RA0){
+        if(PORTAbits.RA2){
             boat.angle++;
-            //up_key=0;
         }
         if(PORTAbits.RA1){
             boat.angle--;
-            //down_key=0;
         }
         //Make sure command is allowed
         if(boat.angle>2){
@@ -200,8 +199,8 @@ void play(){
         if(boat.posY < 16){
             boat.posY=16;
         }
-        else if(boat.posY > 47){
-            boat.posY=47;
+        else if(boat.posY > 48-8){
+            boat.posY=48-8;
         }
         
         //Of the rocks
@@ -212,7 +211,7 @@ void play(){
         
         //Check collision 
         for(i=0;i<ROCKS_NB;i++){
-            if(((rocks[i].posX-BOAT_POSX)<8)&&(rocks[i].posX-BOAT_POSX>-8)&&((boat.posY/8)==rocks[i].posY)){
+            if(((rocks[i].posX-BOAT_POSX)<8)&&(rocks[i].posX-BOAT_POSX>-8)&&((rocks[i].posY*8-boat.posY)<8)&&((rocks[i].posY*8-boat.posY)>-8)){
                 game_over=1;
             }
         }
@@ -228,41 +227,124 @@ void play(){
             glcd_WriteRock(rocks[i].posX, rocks[i].posY);
         }
         
-        glcd_PlotPixel(BOAT_POSX, boat.posY, 1);
+        //glcd_PlotPixel(BOAT_POSX, boat.posY, 1);
+        glcd_WriteBoat(boat.angle, boat.posY);
         
-        nb=score%13+score;
+        if(score==0)wait(5000);
         score++;
         //Wait a little
         wait(500);
         
     }
-    while(1);
+    //while(1);
+    //register score
+    if(score>sc1){
+        sc1=score;
+    }
+    else if(score>sc2){
+        sc2=score;
+    }
+    else if(score>sc3){
+        sc3=score;
+    }
     
+    glcd_FillScreen(1);
+    glcd_SetCursor(24, 3);
+    glcd_WriteString("Game", f8X8, 0);
+    glcd_SetCursor(64, 3);
+    glcd_WriteString("Over", f8X8, 0);
+    while(!PORTAbits.RA0);
+    //Wait a little
+    wait(500);
 }
 
 void scores();
 void help();
 
+void scores(){
+    char str1[20], str2[20], str3[20];
+    sprintf(str1, "1. %d", sc1);
+    sprintf(str2, "2. %d", sc2);
+    sprintf(str3, "3. %d", sc3);
+    
+    glcd_FillScreen(0);
+    glcd_SetCursor(8, 0);
+    glcd_WriteString("Scores", f8X8, 1);
+    
+    glcd_SetCursor(16, 2);
+    glcd_WriteString(str1, f8X8, 1);
+    glcd_SetCursor(16, 3);
+    glcd_WriteString(str2, f8X8, 1);
+    glcd_SetCursor(16, 4);
+    glcd_WriteString(str3, f8X8, 1);
+    while(!PORTAbits.RA0);
+    //Wait a little
+    wait(500);
+}
+
+void help(){
+    glcd_FillScreen(0);
+    glcd_SetCursor(8,0);
+    glcd_WriteString("Help", f8X8, 1);
+    
+    
+    glcd_SetCursor(16,2);
+    glcd_WriteString("AVOID THE ROCKS!", f3X6, 1);
+    
+    glcd_SetCursor(16,4);
+    glcd_WriteString("RA2: ROTATE UP", f3X6, 1);
+    
+    glcd_SetCursor(16,5);
+    glcd_WriteString("RA1: ROTATE DOWN", f3X6, 1);
+    
+    while(!PORTAbits.RA0);
+    //Wait a little
+    wait(500);
+}
 
 void menu(){
     unsigned char s=0;
-    while(!PORTAbits.RA0){
+    do{
+        //Update command
         if(PORTAbits.RA1){ //Left button
             if(s<2)s++;
+            else s=0;
         }
-        if(PORTAbits.RA2){ //Right button
+        if(PORTAbits.RA2){ //Left button
             if(s>0)s--;
+            else s=2;
         }
-    }
+        glcd_FillScreen(0);
+        glcd_SetCursor(24, 0);
+        glcd_WriteString("PADDL", f8X8, 1);
+        glcd_SetCursor(64, 0);
+        glcd_WriteString("EBOAT", f8X8, 1);
+        
+        glcd_SetCursor(16, 2);
+        glcd_WriteString("Play", f8X8, 1);
+        
+        glcd_SetCursor(16, 3);
+        glcd_WriteString("Scores", f8X8, 1);
+        
+        glcd_SetCursor(16, 4);
+        glcd_WriteString("Help", f8X8, 1);
+        
+        glcd_SetCursor (96, 2+s);
+        glcd_WriteChar8X8('<', 1);
+        
+        wait(500);
+    }while(!PORTAbits.RA0);
+    wait(500);
+    
     switch(s){
         case 0: 
             play();
             break;
         case 1: 
-            //scores();
+            scores();
             break;
         case 2:
-            //help();
+            help();
             break;
         default:
             play();
@@ -272,10 +354,10 @@ void menu(){
 void main(void) {
     initMyPIC18F();
     glcd_Init(GLCD_ON);
+    sc1=0; sc2=0; sc3=0;
     
-    play();
+    while(1)menu();
     
-    //menu();
     return;
 }
 
